@@ -49,95 +49,6 @@
       z-index: 0;
     }
 
-    /* ── Setup Screen ── */
-    #setup-screen {
-      position: fixed; inset: 0;
-      background: var(--bg);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 1000;
-      padding: 20px;
-    }
-    .setup-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 40px;
-      max-width: 540px;
-      width: 100%;
-      box-shadow: var(--card-shadow);
-    }
-    .setup-box h1 {
-      font-family: 'Noto Serif Armenian', serif;
-      font-size: 22px;
-      margin-bottom: 8px;
-    }
-    .setup-box .subtitle {
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 28px;
-      line-height: 1.6;
-    }
-    .setup-steps {
-      background: var(--surface2);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 24px;
-      font-size: 13px;
-      line-height: 1.9;
-      color: var(--muted);
-    }
-    .setup-steps b { color: var(--text); }
-    .setup-steps a { color: var(--accent); text-decoration: none; }
-    .setup-steps a:hover { text-decoration: underline; }
-    .setup-field { margin-bottom: 16px; }
-    .setup-field label {
-      display: block;
-      font-size: 11.5px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 7px;
-      font-weight: 600;
-    }
-    .setup-field input {
-      width: 100%;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 11px 14px;
-      color: var(--text);
-      font-size: 14px;
-      font-family: 'DM Sans', sans-serif;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .setup-field input:focus { border-color: var(--accent); }
-    .setup-field input::placeholder { color: var(--muted); font-size: 12px; }
-    .setup-save {
-      width: 100%;
-      padding: 13px;
-      background: linear-gradient(135deg, var(--accent), #5b4de0);
-      border: none;
-      border-radius: 12px;
-      color: white;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: opacity 0.2s;
-      font-family: 'DM Sans', sans-serif;
-    }
-    .setup-save:hover { opacity: 0.88; }
-    .setup-error {
-      margin-top: 12px;
-      padding: 10px 14px;
-      background: rgba(248,113,113,0.1);
-      border: 1px solid rgba(248,113,113,0.3);
-      border-radius: 8px;
-      color: var(--red);
-      font-size: 13px;
-      display: none;
-    }
-
     /* ── Main App ── */
     .layout {
       display: flex;
@@ -480,33 +391,6 @@
 </head>
 <body>
 
-<!-- Setup Screen -->
-<div id="setup-screen">
-  <div class="setup-box">
-    <h1>🛍️ Խանութի Կառավարիչ</h1>
-    <p class="subtitle">Կապակցեք ձեր Google Sheets-ին — տվյալները կպահվեն ամպի մեջ, հասանելի ամենուր:</p>
-
-    <div class="setup-steps">
-      <b>Քայլ 1.</b> Բացեք <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a><br>
-      <b>Քայլ 2.</b> Ստեղծեք նոր Project → Enable «Google Sheets API»<br>
-      <b>Քայլ 3.</b> APIs & Services → Credentials → «+ Create Credentials» → API Key<br>
-      <b>Քայլ 4.</b> Ստեղծեք <a href="https://sheets.google.com" target="_blank">Google Sheets</a> — <b>կիսեք «Anyone with link can edit»</b><br>
-      <b>Քայլ 5.</b> Spreadsheet ID-ն URL-ից է՝ docs.google.com/spreadsheets/d/<b>[ՍԱ]</b>/edit
-    </div>
-
-    <div class="setup-field">
-      <label>API Key</label>
-      <input type="text" id="cfg-apikey" placeholder="AIzaSy..." />
-    </div>
-    <div class="setup-field">
-      <label>Spreadsheet ID</label>
-      <input type="text" id="cfg-sheetid" placeholder="1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms" />
-    </div>
-    <button class="setup-save" onclick="saveConfig()">✅ Կապակցել եւ սկսել</button>
-    <div class="setup-error" id="setup-error"></div>
-  </div>
-</div>
-
 <!-- Loading Overlay -->
 <div class="loading-overlay" id="loading-overlay">
   <div class="loading-box">
@@ -542,7 +426,6 @@
     </nav>
     <div class="sidebar-footer">
       <button class="download-btn" onclick="downloadCSV()">📄 Ներբեռնել CSV</button>
-      <button class="settings-btn" onclick="openSettings()">⚙️ Կարգավորումներ</button>
     </div>
   </aside>
 
@@ -686,9 +569,8 @@
 <script>
 // ── Config ───────────────────────────────────────────────────────────────────
 
-const CFG_KEY = 'shop_manager_config';
-let API_KEY = '';
-let SHEET_ID = '';
+let API_KEY = 'AIzaSyCpKWB7pO-j3haTjAtxFu4pyMOzd6X6xUs';
+let SHEET_ID = '1KtuEFT4UMyJPBtFSxqQt9vJRznpNYzmdb2rSonZGLl0';
 
 // Sheet names
 const PRODUCTS_SHEET = 'Products';
@@ -704,52 +586,12 @@ const MONTHS_HY = ['Հունվար','Փետրվար','Մարտ','Ապրիլ','Մ
 // ── Init ─────────────────────────────────────────────────────────────────────
 
 function init() {
-  const saved = localStorage.getItem(CFG_KEY);
-  if (saved) {
-    const cfg = JSON.parse(saved);
-    API_KEY = cfg.apiKey;
-    SHEET_ID = cfg.sheetId;
-    startApp();
-  }
-  // else: setup screen is shown by default
+  startApp();
 }
 
-async function saveConfig() {
-  const apiKey = document.getElementById('cfg-apikey').value.trim();
-  const sheetId = document.getElementById('cfg-sheetid').value.trim();
-  const errEl = document.getElementById('setup-error');
-  errEl.style.display = 'none';
 
-  if (!apiKey || !sheetId) {
-    errEl.textContent = 'Խնդրում ենք լրացնել բոլոր դաշտերը';
-    errEl.style.display = 'block';
-    return;
-  }
 
-  API_KEY = apiKey;
-  SHEET_ID = sheetId;
 
-  showLoading('Ստուգում է կապը...');
-  try {
-    await ensureSheetsExist();
-    localStorage.setItem(CFG_KEY, JSON.stringify({ apiKey, sheetId }));
-    document.getElementById('setup-screen').style.display = 'none';
-    hideLoading();
-    startApp();
-  } catch(e) {
-    hideLoading();
-    errEl.textContent = 'Սխալ: ' + (e.message || 'Ստուգեք API Key-ն ու Sheet ID-ն');
-    errEl.style.display = 'block';
-    API_KEY = ''; SHEET_ID = '';
-  }
-}
-
-function openSettings() {
-  const cfg = JSON.parse(localStorage.getItem(CFG_KEY) || '{}');
-  document.getElementById('cfg-apikey').value = cfg.apiKey || '';
-  document.getElementById('cfg-sheetid').value = cfg.sheetId || '';
-  document.getElementById('setup-screen').style.display = 'flex';
-}
 
 async function startApp() {
   document.getElementById('app').style.display = 'flex';
