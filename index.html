@@ -1,885 +1,889 @@
 <!DOCTYPE html>
 <html lang="hy">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Խանութի Կառավարիչ</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Armenian:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #0d0d1a;
-      --surface: #13132a;
-      --surface2: #1a1a3a;
-      --border: rgba(255,255,255,0.08);
-      --accent: #7c6af7;
-      --accent2: #f7a76a;
-      --green: #4ade80;
-      --red: #f87171;
-      --text: #e8e8f0;
-      --muted: #8888aa;
-      --card-shadow: 0 4px 24px rgba(0,0,0,0.4);
-    }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>🛍️ Խանութի Կառավարիչ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Armenian:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#07071a;--s1:#0d0d28;--s2:#13133a;--s3:#1a1a4a;
+  --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.13);
+  --accent:#7c6af7;--ag:linear-gradient(135deg,#7c6af7,#4f46e5);
+  --teal:#2dd4bf;--tg:linear-gradient(135deg,#2dd4bf,#0891b2);
+  --orange:#fb923c;--green:#34d399;--red:#f87171;--yellow:#fbbf24;
+  --text:#e8e8f4;--muted:#6b6b99;--muted2:#9999cc;
+  --r:rgba;
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;top:-250px;left:-150px;width:600px;height:600px;
+  background:radial-gradient(circle,rgba(124,106,247,.1) 0%,transparent 70%);pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;bottom:-200px;right:-100px;width:500px;height:500px;
+  background:radial-gradient(circle,rgba(45,212,191,.07) 0%,transparent 70%);pointer-events:none;z-index:0}
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+/* ══ SETUP ══════════════════════════════════════════════════════ */
+#setup{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px}
+.sc{background:var(--s1);border:1px solid var(--border2);border-radius:24px;padding:44px;max-width:560px;width:100%;
+  box-shadow:0 32px 80px rgba(0,0,0,.6);position:relative;overflow:hidden}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#7c6af7,#2dd4bf,#fb923c)}
+.sc-logo{font-size:44px;margin-bottom:18px}
+.sc h1{font-family:'Noto Serif Armenian',serif;font-size:26px;font-weight:700;margin-bottom:8px}
+.sc-sub{color:var(--muted2);font-size:13.5px;line-height:1.7;margin-bottom:28px}
+.steps{background:var(--s2);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-bottom:24px}
+.step{display:flex;gap:13px;margin-bottom:12px;font-size:13px;color:var(--muted2);line-height:1.6;align-items:flex-start}
+.step:last-child{margin-bottom:0}
+.sn{min-width:22px;height:22px;background:var(--ag);border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;color:#fff;flex-shrink:0;margin-top:2px}
+.step b{color:var(--text)}.step a{color:var(--accent);text-decoration:none}.step a:hover{text-decoration:underline}
+.step code{background:rgba(124,106,247,.15);color:var(--accent);padding:1px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px}
+.sf-label{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;font-weight:600;margin-bottom:7px}
+.sf-input{width:100%;background:var(--s2);border:1px solid var(--border2);border-radius:12px;padding:12px 16px;
+  color:var(--text);font-size:13.5px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;margin-bottom:16px}
+.sf-input:focus{border-color:var(--accent)}
+.sf-input::placeholder{color:var(--muted);font-size:12.5px}
+.sf-btn{width:100%;padding:14px;background:var(--ag);border:none;border-radius:13px;color:#fff;
+  font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity .2s}
+.sf-btn:hover{opacity:.88}
+.sf-err{margin-top:12px;padding:11px 16px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);
+  border-radius:10px;color:var(--red);font-size:13px;display:none;line-height:1.5}
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      min-height: 100vh;
-    }
+/* ══ LAYOUT ══════════════════════════════════════════════════════ */
+.layout{display:flex;min-height:100vh;position:relative;z-index:1}
 
-    body::before {
-      content: '';
-      position: fixed; top: -200px; left: -200px;
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(124,106,247,0.12) 0%, transparent 70%);
-      pointer-events: none; z-index: 0;
-    }
-    body::after {
-      content: '';
-      position: fixed; bottom: -200px; right: -200px;
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(247,167,106,0.08) 0%, transparent 70%);
-      pointer-events: none; z-index: 0;
-    }
+/* ══ SIDEBAR ══════════════════════════════════════════════════════ */
+.sidebar{width:252px;background:var(--s1);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;position:fixed;height:100vh;top:0;left:0}
+.sb-top{padding:24px 20px;border-bottom:1px solid var(--border)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-ico{width:40px;height:40px;background:var(--ag);border-radius:11px;
+  display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.brand-txt h1{font-family:'Noto Serif Armenian',serif;font-size:13.5px;font-weight:700;line-height:1.3}
+.brand-txt p{font-size:10.5px;color:var(--muted);margin-top:2px}
+.nav{padding:14px 10px;flex:1;overflow-y:auto}
+.nav-sec{font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.9px;
+  font-weight:700;padding:0 10px;margin:14px 0 5px}
+.nav-sec:first-child{margin-top:4px}
+.ni{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;
+  font-size:13px;font-weight:500;color:var(--muted);transition:all .16s;margin-bottom:2px;
+  border:none;background:none;width:100%;text-align:left;font-family:'Inter',sans-serif}
+.ni:hover{background:rgba(255,255,255,.05);color:var(--text)}
+.ni.active{background:rgba(124,106,247,.15);color:var(--accent)}
+.ni-icon{width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,.05);
+  display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:background .16s}
+.ni.active .ni-icon{background:rgba(124,106,247,.2)}
+.sb-foot{padding:12px 10px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:7px}
+.sbb{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px;
+  border-radius:10px;border:none;font-size:12.5px;font-weight:600;cursor:pointer;
+  font-family:'Inter',sans-serif;transition:all .16s;width:100%}
+.sbb-p{background:var(--ag);color:#fff}.sbb-p:hover{opacity:.88}
+.sbb-g{background:none;border:1px solid var(--border2);color:var(--muted)}.sbb-g:hover{color:var(--text);border-color:rgba(255,255,255,.22)}
 
-    /* ── Setup Screen ─────────────────────────────────────────── */
-    #setup-screen {
-      position: fixed; inset: 0;
-      background: var(--bg);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 1000; padding: 20px;
-    }
-    .setup-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 40px;
-      max-width: 580px; width: 100%;
-      box-shadow: var(--card-shadow);
-    }
-    .setup-box h1 {
-      font-family: 'Noto Serif Armenian', serif;
-      font-size: 22px; margin-bottom: 6px;
-    }
-    .setup-box .subtitle {
-      color: var(--muted); font-size: 13px;
-      margin-bottom: 26px; line-height: 1.6;
-    }
-    .setup-steps {
-      background: var(--surface2);
-      border-radius: 12px; padding: 18px 20px;
-      margin-bottom: 22px; font-size: 13px;
-      line-height: 2; color: var(--muted);
-    }
-    .setup-steps b { color: var(--text); }
-    .setup-steps a { color: var(--accent); text-decoration: none; }
-    .setup-steps a:hover { text-decoration: underline; }
-    .setup-steps code {
-      background: rgba(124,106,247,0.15);
-      color: var(--accent);
-      padding: 1px 6px; border-radius: 4px;
-      font-size: 12px;
-    }
-    .setup-field { margin-bottom: 14px; }
-    .setup-field label {
-      display: block; font-size: 11.5px; color: var(--muted);
-      text-transform: uppercase; letter-spacing: 0.5px;
-      margin-bottom: 7px; font-weight: 600;
-    }
-    .setup-field input {
-      width: 100%;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 10px; padding: 11px 14px;
-      color: var(--text); font-size: 13px;
-      font-family: 'DM Sans', sans-serif;
-      outline: none; transition: border-color 0.2s;
-    }
-    .setup-field input:focus { border-color: var(--accent); }
-    .setup-field input::placeholder { color: var(--muted); font-size: 12px; }
-    .setup-save {
-      width: 100%; padding: 13px;
-      background: linear-gradient(135deg, var(--accent), #5b4de0);
-      border: none; border-radius: 12px;
-      color: white; font-size: 14px; font-weight: 700;
-      cursor: pointer; transition: opacity 0.2s;
-      font-family: 'DM Sans', sans-serif;
-    }
-    .setup-save:hover { opacity: 0.88; }
-    .setup-error {
-      margin-top: 12px; padding: 10px 14px;
-      background: rgba(248,113,113,0.1);
-      border: 1px solid rgba(248,113,113,0.3);
-      border-radius: 8px; color: var(--red);
-      font-size: 13px; display: none; line-height: 1.5;
-    }
+/* ══ MAIN ══════════════════════════════════════════════════════════ */
+.main{margin-left:252px;flex:1;padding:32px 36px;min-height:100vh}
+.page{display:none}.page.active{display:block}
 
-    /* ── Main Layout ──────────────────────────────────────────── */
-    .layout {
-      display: flex; min-height: 100vh;
-      position: relative; z-index: 1;
-    }
+/* Page header */
+.ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px}
+.ph-l h2{font-family:'Noto Serif Armenian',serif;font-size:27px;font-weight:700}
+.ph-l p{font-size:13px;color:var(--muted);margin-top:5px}
+.ph-r{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 
-    .sidebar {
-      width: 240px; background: var(--surface);
-      border-right: 1px solid var(--border);
-      display: flex; flex-direction: column;
-      padding: 28px 0; position: fixed;
-      height: 100vh; top: 0; left: 0;
-    }
-    .sidebar-logo {
-      padding: 0 24px 28px;
-      border-bottom: 1px solid var(--border);
-    }
-    .sidebar-logo .shop-icon { font-size: 28px; margin-bottom: 8px; display: block; }
-    .sidebar-logo h1 {
-      font-family: 'Noto Serif Armenian', serif;
-      font-size: 15px; font-weight: 700;
-      color: var(--text); line-height: 1.3;
-    }
-    .sidebar-logo p { font-size: 11px; color: var(--muted); margin-top: 2px; }
+/* Stat grid */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.stat{background:var(--s1);border:1px solid var(--border);border-radius:18px;padding:22px;position:relative;overflow:hidden}
+.stat-glow{position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;opacity:.15;filter:blur(20px)}
+.stat-label{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;font-weight:600;margin-bottom:10px}
+.stat-val{font-size:23px;font-weight:700;line-height:1}
+.stat-sub{font-size:11.5px;color:var(--muted);margin-top:7px}
+.cv{color:var(--accent)}.ct{color:var(--teal)}.co{color:var(--orange)}.cg{color:var(--green)}.cr{color:var(--red)}
 
-    .nav { padding: 20px 12px; flex: 1; }
-    .nav-item {
-      display: flex; align-items: center; gap: 12px;
-      padding: 11px 16px; border-radius: 10px;
-      cursor: pointer; font-size: 13.5px; font-weight: 500;
-      color: var(--muted); transition: all 0.2s;
-      margin-bottom: 4px; border: none; background: none;
-      width: 100%; text-align: left;
-      font-family: 'DM Sans', sans-serif;
-    }
-    .nav-item:hover { background: rgba(255,255,255,0.05); color: var(--text); }
-    .nav-item.active { background: rgba(124,106,247,0.15); color: var(--accent); }
-    .nav-item .icon { font-size: 16px; width: 20px; text-align: center; }
+/* Card */
+.card{background:var(--s1);border:1px solid var(--border);border-radius:18px;padding:26px;margin-bottom:22px}
+.card-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:10px}
+.card-title{font-family:'Noto Serif Armenian',serif;font-size:15.5px;font-weight:700;display:flex;align-items:center;gap:10px}
+.ctag{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px}
+.ctag-p{background:rgba(124,106,247,.15)}.ctag-g{background:rgba(52,211,153,.12)}.ctag-o{background:rgba(251,146,60,.12)}
 
-    .sidebar-footer {
-      padding: 16px 12px; border-top: 1px solid var(--border);
-      display: flex; flex-direction: column; gap: 8px;
-    }
-    .download-btn {
-      width: 100%; padding: 10px;
-      background: linear-gradient(135deg, var(--accent), #5b4de0);
-      border: none; border-radius: 10px; color: white;
-      font-size: 13px; font-weight: 600; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      gap: 8px; transition: opacity 0.2s;
-      font-family: 'DM Sans', sans-serif;
-    }
-    .download-btn:hover { opacity: 0.85; }
-    .settings-btn {
-      width: 100%; padding: 8px; background: none;
-      border: 1px solid var(--border); border-radius: 10px;
-      color: var(--muted); font-size: 12px; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      gap: 6px; transition: all 0.2s;
-      font-family: 'DM Sans', sans-serif;
-    }
-    .settings-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+/* Form */
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:14px;margin-bottom:18px}
+.field label{display:block;font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:7px}
+.field input,.field select{width:100%;background:var(--s2);border:1px solid var(--border2);border-radius:11px;
+  padding:11px 14px;color:var(--text);font-size:13.5px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.field input:focus,.field select:focus{border-color:var(--accent)}
+.field select option{background:var(--s2)}
 
-    .main {
-      margin-left: 240px; flex: 1; padding: 32px;
-      max-width: calc(100vw - 240px);
-    }
+/* Buttons */
+.btn{padding:10px 20px;border-radius:10px;border:none;font-size:13px;font-weight:600;
+  cursor:pointer;transition:all .16s;display:inline-flex;align-items:center;gap:8px;
+  font-family:'Inter',sans-serif;white-space:nowrap}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn-p{background:var(--ag);color:#fff}.btn-p:hover:not(:disabled){opacity:.88}
+.btn-g{background:rgba(52,211,153,.12);color:var(--green);border:1px solid rgba(52,211,153,.25)}
+.btn-g:hover:not(:disabled){background:rgba(52,211,153,.22)}
+.btn-r{background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.18);padding:6px 11px;font-size:11.5px}
+.btn-r:hover:not(:disabled){background:rgba(248,113,113,.2)}
+.btn-ghost{background:none;border:1px solid var(--border2);color:var(--muted)}
+.btn-ghost:hover:not(:disabled){color:var(--text);border-color:rgba(255,255,255,.22)}
+.btn-teal{background:rgba(45,212,191,.1);color:var(--teal);border:1px solid rgba(45,212,191,.2)}
+.btn-teal:hover:not(:disabled){background:rgba(45,212,191,.2)}
 
-    .page-header { margin-bottom: 28px; }
-    .page-header h2 {
-      font-family: 'Noto Serif Armenian', serif;
-      font-size: 26px; font-weight: 700; color: var(--text);
-    }
-    .page-header p { font-size: 13.5px; color: var(--muted); margin-top: 4px; }
+/* Table */
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:separate;border-spacing:0}
+thead th{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;
+  padding:9px 15px;text-align:left;border-bottom:1px solid var(--border);font-weight:700}
+tbody tr{transition:background .12s}
+tbody tr:hover td{background:rgba(255,255,255,.025)}
+tbody td{padding:12px 15px;font-size:13.5px;border-bottom:1px solid rgba(255,255,255,.04)}
+tbody tr:last-child td{border-bottom:none}
 
-    .stats-row {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 16px; margin-bottom: 28px;
-    }
-    .stat-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 14px; padding: 20px;
-    }
-    .stat-card .label { font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-    .stat-card .value { font-size: 22px; font-weight: 700; color: var(--text); }
-    .stat-card .value.green { color: var(--green); }
-    .stat-card .value.accent { color: var(--accent); }
-    .stat-card .value.orange { color: var(--accent2); }
+.sku{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--accent);
+  background:rgba(124,106,247,.1);padding:3px 8px;border-radius:5px;letter-spacing:.5px}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600}
+.bg{background:rgba(52,211,153,.12);color:var(--green)}
+.br{background:rgba(248,113,113,.12);color:var(--red)}
+.bp{background:rgba(124,106,247,.12);color:var(--accent)}
+.bo{background:rgba(251,146,60,.12);color:var(--orange)}
+.bt{background:rgba(45,212,191,.12);color:var(--teal)}
 
-    .card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 16px; padding: 24px; margin-bottom: 24px;
-    }
-    .card-title {
-      font-family: 'Noto Serif Armenian', serif;
-      font-size: 16px; font-weight: 700; margin-bottom: 20px;
-      display: flex; align-items: center; gap: 10px;
-    }
+td.edit-cell{cursor:pointer}
+td.edit-cell:hover .ev{color:var(--accent);border-bottom:1px dashed var(--accent)}
+.ev{display:inline-block}
+td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7px;
+  padding:5px 9px;color:var(--text);font-size:13px;width:110px;font-family:'Inter',sans-serif;outline:none}
 
-    .form-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 14px; margin-bottom: 16px;
-    }
-    .field label {
-      display: block; font-size: 11.5px; color: var(--muted);
-      margin-bottom: 6px; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.4px;
-    }
-    .field input, .field select {
-      width: 100%; background: var(--surface2);
-      border: 1px solid var(--border); border-radius: 10px;
-      padding: 10px 14px; color: var(--text); font-size: 14px;
-      font-family: 'DM Sans', sans-serif;
-      transition: border-color 0.2s; outline: none;
-    }
-    .field input:focus, .field select:focus { border-color: var(--accent); }
-    .field select option { background: var(--surface2); }
+/* Filters */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;align-items:center}
+.filters select{background:var(--s2);border:1px solid var(--border2);border-radius:9px;
+  padding:8px 12px;color:var(--text);font-size:13px;outline:none;font-family:'Inter',sans-serif}
+.filters select:focus{border-color:var(--accent)}
 
-    .btn {
-      padding: 10px 22px; border-radius: 10px; border: none;
-      font-size: 13.5px; font-weight: 600; cursor: pointer;
-      transition: all 0.2s; display: inline-flex;
-      align-items: center; gap: 8px;
-      font-family: 'DM Sans', sans-serif;
-    }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .btn-primary { background: var(--accent); color: white; }
-    .btn-primary:hover:not(:disabled) { background: #6a59e0; }
-    .btn-success { background: rgba(74,222,128,0.15); color: var(--green); border: 1px solid rgba(74,222,128,0.3); }
-    .btn-success:hover:not(:disabled) { background: rgba(74,222,128,0.25); }
-    .btn-danger { background: rgba(248,113,113,0.1); color: var(--red); border: 1px solid rgba(248,113,113,0.2); padding: 6px 12px; font-size: 12px; }
-    .btn-danger:hover:not(:disabled) { background: rgba(248,113,113,0.2); }
+/* Summary bar */
+.sumbar{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+.sumb{background:var(--s2);border:1px solid var(--border);border-radius:13px;padding:16px 18px;display:flex;align-items:center;gap:13px}
+.sumb-ico{font-size:22px}
+.sumb-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.sumb-val{font-size:18px;font-weight:700;margin-top:3px}
 
-    .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; }
-    thead th {
-      font-size: 11px; color: var(--muted); text-transform: uppercase;
-      letter-spacing: 0.5px; padding: 10px 14px; text-align: left;
-      border-bottom: 1px solid var(--border);
-    }
-    tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.15s; }
-    tbody tr:hover { background: rgba(255,255,255,0.03); }
-    tbody td { padding: 13px 14px; font-size: 13.5px; }
+/* Info box */
+.infobox{background:rgba(124,106,247,.08);border:1px solid rgba(124,106,247,.2);
+  border-radius:12px;padding:12px 16px;font-size:13px;color:var(--accent);margin-bottom:14px;line-height:1.5}
+.warnbox{background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.2);
+  border-radius:12px;padding:12px 16px;font-size:13px;color:var(--orange);margin-bottom:14px;line-height:1.5}
+.successbox{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);
+  border-radius:12px;padding:12px 16px;font-size:13px;color:var(--green);margin-bottom:14px;line-height:1.5}
 
-    .qty-badge {
-      display: inline-block; padding: 2px 10px;
-      border-radius: 20px; font-size: 12px; font-weight: 600;
-    }
-    .qty-ok  { background: rgba(74,222,128,0.12); color: var(--green); }
-    .qty-low { background: rgba(248,113,113,0.12); color: var(--red); }
-    .price  { font-weight: 600; color: var(--accent2); }
-    .income { font-weight: 600; color: var(--green); }
+/* Import area */
+.drop-area{border:2px dashed var(--border2);border-radius:14px;padding:32px;text-align:center;
+  cursor:pointer;transition:all .2s;background:var(--s2)}
+.drop-area:hover,.drop-area.over{border-color:var(--accent);background:rgba(124,106,247,.07)}
+.drop-area .drop-icon{font-size:36px;margin-bottom:10px}
+.drop-area p{color:var(--muted);font-size:14px}
+.drop-area strong{color:var(--accent)}
+#file-input{display:none}
 
-    .filter-row {
-      display: flex; gap: 10px; align-items: center;
-      margin-bottom: 20px; flex-wrap: wrap;
-    }
-    .filter-row select {
-      background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 8px; padding: 8px 12px; color: var(--text);
-      font-size: 13px; outline: none;
-      font-family: 'DM Sans', sans-serif;
-    }
-    .filter-row select:focus { border-color: var(--accent); }
+/* Import preview table */
+.preview-wrap{max-height:280px;overflow-y:auto;border:1px solid var(--border);border-radius:10px;margin:16px 0}
+.preview-wrap table thead th{position:sticky;top:0;background:var(--s2);z-index:1}
 
-    #toast {
-      position: fixed; bottom: 24px; right: 24px;
-      background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 12px; padding: 14px 20px; font-size: 13.5px;
-      box-shadow: var(--card-shadow); opacity: 0;
-      transform: translateY(10px); transition: all 0.3s;
-      z-index: 9999; max-width: 320px; line-height: 1.4;
-    }
-    #toast.show  { opacity: 1; transform: translateY(0); }
-    #toast.success { border-color: rgba(74,222,128,0.4); color: var(--green); }
-    #toast.error   { border-color: rgba(248,113,113,0.4); color: var(--red); }
-    #toast.info    { border-color: rgba(124,106,247,0.4); color: var(--accent); }
+/* Toast */
+#toast{position:fixed;bottom:24px;right:24px;background:var(--s2);border:1px solid var(--border);
+  border-radius:14px;padding:14px 20px;font-size:13.5px;box-shadow:0 8px 40px rgba(0,0,0,.5);
+  opacity:0;transform:translateY(12px);transition:all .28s;z-index:9999;max-width:320px;line-height:1.4}
+#toast.show{opacity:1;transform:translateY(0)}
+#toast.success{border-color:rgba(52,211,153,.4);color:var(--green)}
+#toast.error{border-color:rgba(248,113,113,.4);color:var(--red)}
+#toast.info{border-color:rgba(124,106,247,.4);color:var(--accent)}
 
-    .page { display: none; }
-    .page.active { display: block; }
-    .empty { text-align: center; padding: 40px; color: var(--muted); font-size: 14px; }
+/* Overlay */
+.spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.2);
+  border-top-color:#fff;border-radius:50%;animation:sp .6s linear infinite;vertical-align:middle}
+@keyframes sp{to{transform:rotate(360deg)}}
+#ov{position:fixed;inset:0;background:rgba(7,7,26,.8);display:none;align-items:center;
+  justify-content:center;z-index:500;backdrop-filter:blur(6px)}
+#ov.show{display:flex}
+.ov-box{background:var(--s1);border:1px solid var(--border2);border-radius:18px;padding:30px 40px;text-align:center;color:var(--muted);font-size:14px}
+.ov-box .spin{width:30px;height:30px;display:block;margin:0 auto 14px}
 
-    .month-summary {
-      display: grid; grid-template-columns: repeat(3,1fr);
-      gap: 14px; margin-bottom: 20px;
-    }
-    .month-stat {
-      background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 12px; padding: 16px; text-align: center;
-    }
-    .month-stat .ms-label { font-size: 11px; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; }
-    .month-stat .ms-val   { font-size: 20px; font-weight: 700; }
+.empty{text-align:center;padding:48px;color:var(--muted);font-size:14px}
+.empty .ei{font-size:36px;display:block;margin-bottom:10px;opacity:.4}
 
-    .spinner {
-      display: inline-block; width: 16px; height: 16px;
-      border: 2px solid rgba(255,255,255,0.2);
-      border-top-color: white; border-radius: 50%;
-      animation: spin 0.6s linear infinite; vertical-align: middle;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .loading-overlay {
-      position: fixed; inset: 0;
-      background: rgba(13,13,26,0.7); display: none;
-      align-items: center; justify-content: center;
-      z-index: 500; backdrop-filter: blur(4px);
-    }
-    .loading-overlay.show { display: flex; }
-    .loading-box {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 16px; padding: 28px 36px;
-      text-align: center; font-size: 14px; color: var(--muted);
-    }
-    .loading-box .spinner { width: 28px; height: 28px; display: block; margin: 0 auto 12px; }
-
-    td input.inline-edit {
-      background: var(--surface2); border: 1px solid var(--accent);
-      border-radius: 6px; padding: 4px 8px; color: var(--text);
-      font-size: 13.5px; width: 100px;
-      font-family: 'DM Sans', sans-serif; outline: none;
-    }
-    .editable { cursor: pointer; border-bottom: 1px dashed var(--border); }
-    .editable:hover { border-color: var(--accent); color: var(--accent); }
-  </style>
+/* SKU badge in sell dropdown */
+.sell-sku{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
+</style>
 </head>
 <body>
 
-<!-- ── Setup Screen ──────────────────────────────────────────── -->
-<div id="setup-screen">
-  <div class="setup-box">
-    <h1>🛍️ Խանութի Կառավարիչ</h1>
-    <p class="subtitle">Մեկ անգամ տեղադրեք Apps Script URL-ը — հետո ամեն ինչ ավտոմատ կաշխատի:</p>
-
-    <div class="setup-steps">
-      <b>Քայլ 1.</b> Բացեք ձեր Google Sheet → <b>Extensions → Apps Script</b><br>
-      <b>Քայլ 2.</b> Ջնջեք ամեն ինչ → Paste արեք <code>Code.gs</code>-ի ամբողջ կոդը → <b>💾 Save</b><br>
-      <b>Քայլ 3.</b> Սեղմեք <b>Deploy → New deployment</b><br>
-      <b>Քայլ 4.</b> Type: <code>Web app</code> · Execute as: <code>Me</code> · Who has access: <code>Anyone</code><br>
-      <b>Քայլ 5.</b> Սեղմեք <b>Deploy</b> → copy-paste արեք URL-ը ներքևի դաշտ
+<!-- SETUP -->
+<div id="setup">
+  <div class="sc">
+    <div class="sc-logo">🛍️</div>
+    <h1>Խանութի Կառավարիչ</h1>
+    <p class="sc-sub">Միացրեք ձեր Google Apps Script-ին — տվյալները ապահով կպահվեն ձեր Spreadsheet-ում:</p>
+    <div class="steps">
+      <div class="step"><div class="sn">1</div><div>Google Sheet → <b>Extensions → Apps Script</b></div></div>
+      <div class="step"><div class="sn">2</div><div>Paste արեք <b>Code.gs</b>-ի ամբողջ կոդը → <b>Save</b></div></div>
+      <div class="step"><div class="sn">3</div><div><b>Deploy → New deployment</b> · Type: <code>Web app</code></div></div>
+      <div class="step"><div class="sn">4</div><div>Execute as: <code>Me</code> · Who has access: <code>Anyone</code> → Deploy</div></div>
+      <div class="step"><div class="sn">5</div><div>Copy արեք <b>Web App URL</b>-ը եւ paste արեք ներքեւ 👇</div></div>
     </div>
-
-    <div class="setup-field">
-      <label>Apps Script Web App URL</label>
-      <input type="text" id="cfg-url"
-        placeholder="https://script.google.com/macros/s/.../exec" />
-    </div>
-    <button class="setup-save" onclick="saveConfig()">✅ Կապակցել եւ սկսել</button>
-    <div class="setup-error" id="setup-error"></div>
+    <div class="sf-label">Apps Script Web App URL</div>
+    <input class="sf-input" type="text" id="cfg-url" placeholder="https://script.google.com/macros/s/.../exec"/>
+    <button class="sf-btn" onclick="saveConfig()">✅ Կապակցել եւ սկսել</button>
+    <div class="sf-err" id="sf-err"></div>
   </div>
 </div>
 
-<!-- ── Loading ───────────────────────────────────────────────── -->
-<div class="loading-overlay" id="loading-overlay">
-  <div class="loading-box">
-    <span class="spinner"></span>
-    <div id="loading-text">Բեռնվում է...</div>
+<!-- LOADING -->
+<div id="ov">
+  <div class="ov-box">
+    <span class="spin"></span>
+    <div id="ov-txt">Բեռնվում է...</div>
   </div>
 </div>
 
-<!-- ── App ───────────────────────────────────────────────────── -->
-<div class="layout" id="app" style="display:none;">
+<!-- APP -->
+<div class="layout" id="app" style="display:none">
   <aside class="sidebar">
-    <div class="sidebar-logo">
-      <span class="shop-icon">🛍️</span>
-      <h1>Խանութի Կառավարիչ</h1>
-      <p>Ապրանք ու Վաճառք</p>
+    <div class="sb-top">
+      <div class="brand">
+        <div class="brand-ico">🛍️</div>
+        <div class="brand-txt">
+          <h1>Խանութ</h1>
+          <p>Կառ. Համակարգ</p>
+        </div>
+      </div>
     </div>
     <nav class="nav">
-      <button class="nav-item active" onclick="showPage('dashboard',this)">
-        <span class="icon">📊</span> Ամփոփում
-      </button>
-      <button class="nav-item" onclick="showPage('products',this)">
-        <span class="icon">📦</span> Ապրանքներ
-      </button>
-      <button class="nav-item" onclick="showPage('add-product',this)">
-        <span class="icon">➕</span> Ավելացնել ապրանք
-      </button>
-      <button class="nav-item" onclick="showPage('sell',this)">
-        <span class="icon">💰</span> Գրանցել վաճառք
-      </button>
-      <button class="nav-item" onclick="showPage('sales-history',this)">
-        <span class="icon">🗓️</span> Վաճառքների պատմություն
-      </button>
+      <div class="nav-sec">Հիմնական</div>
+      <button class="ni active" onclick="go('dashboard',this)"><span class="ni-icon">📊</span>Ամփոփում</button>
+      <button class="ni" onclick="go('products',this)"><span class="ni-icon">📦</span>Ապրանքներ</button>
+      <div class="nav-sec">Ավ. / Վաճ.</div>
+      <button class="ni" onclick="go('add',this)"><span class="ni-icon">➕</span>Ավ. ապրանք</button>
+      <button class="ni" onclick="go('import',this)"><span class="ni-icon">📥</span>Bulk import</button>
+      <button class="ni" onclick="go('sell',this)"><span class="ni-icon">💰</span>Գրանցել վաճ.</button>
+      <div class="nav-sec">Վերլուծություն</div>
+      <button class="ni" onclick="go('history',this)"><span class="ni-icon">🗓️</span>Վ. Պատմություն</button>
+      <button class="ni" onclick="go('tracker',this)"><span class="ni-icon">⏱️</span>Sell-through</button>
     </nav>
-    <div class="sidebar-footer">
-      <button class="download-btn" onclick="downloadCSV()">📄 Ներբեռնել CSV</button>
-      <button class="settings-btn" onclick="openSettings()">⚙️ Կարգավորումներ</button>
+    <div class="sb-foot">
+      <button class="sbb sbb-p" onclick="downloadCSV()">📄 Ներբ. CSV</button>
+      <button class="sbb sbb-g" onclick="openSettings()">⚙️ Կարգ.</button>
     </div>
   </aside>
 
   <main class="main">
 
-    <!-- Dashboard -->
+    <!-- DASHBOARD -->
     <div id="page-dashboard" class="page active">
-      <div class="page-header">
-        <h2>Ամփոփում</h2>
-        <p>Ձեր խանութի ընդհանուր վիճակը</p>
+      <div class="ph">
+        <div class="ph-l"><h2>Ամփոփում</h2><p>Ձեր խանութի ընդհ. վիճ.</p></div>
+        <div class="ph-r"><button class="btn btn-ghost" onclick="loadData()">🔄 Թ-ն</button></div>
       </div>
-      <div class="stats-row">
-        <div class="stat-card"><div class="label">Ապրանքատեսակ</div><div class="value accent" id="stat-products">—</div></div>
-        <div class="stat-card"><div class="label">Ներդրված գումար</div><div class="value orange" id="stat-invested">—</div></div>
-        <div class="stat-card"><div class="label">Ակնկ. Եկամուտ</div><div class="value green" id="stat-expected">—</div></div>
-        <div class="stat-card"><div class="label">Ամսական վաճառք</div><div class="value green" id="stat-month-income">—</div></div>
+      <div class="stats">
+        <div class="stat"><div class="stat-glow" style="background:var(--accent)"></div>
+          <div class="stat-label">Ապրանքատ.</div><div class="stat-val cv" id="st-cnt">—</div><div class="stat-sub" id="st-cnt-s"> </div></div>
+        <div class="stat"><div class="stat-glow" style="background:var(--orange)"></div>
+          <div class="stat-label">Ներդրված</div><div class="stat-val co" id="st-inv">—</div><div class="stat-sub">ձ. գ. × քանակ</div></div>
+        <div class="stat"><div class="stat-glow" style="background:var(--green)"></div>
+          <div class="stat-label">Ակնկ. Եկ.</div><div class="stat-val cg" id="st-exp">—</div><div class="stat-sub" id="st-exp-s"> </div></div>
+        <div class="stat"><div class="stat-glow" style="background:var(--teal)"></div>
+          <div class="stat-label">Ամսական</div><div class="stat-val ct" id="st-mon">—</div><div class="stat-sub" id="st-mon-s"> </div></div>
       </div>
       <div class="card">
-        <div class="card-title">📦 Ապրանքների ցուցակ</div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Անվանում</th><th>Քանակ</th><th>Վաճառքի գին</th><th>Ակնկ. Եկամուտ</th></tr></thead>
-            <tbody id="dash-products-body"></tbody>
-          </table>
-        </div>
+        <div class="card-h"><div class="card-title"><span class="ctag ctag-p">📦</span>Ապ. ցուցակ</div></div>
+        <div class="tw"><table>
+          <thead><tr><th>SKU</th><th>Ապրանք</th><th>Պ-ում</th><th>Վ. Գ.</th><th>Ակ. Եկ.</th><th>Կ-ն</th></tr></thead>
+          <tbody id="dash-tb"></tbody>
+        </table></div>
       </div>
     </div>
 
-    <!-- Products -->
+    <!-- PRODUCTS -->
     <div id="page-products" class="page">
-      <div class="page-header">
-        <h2>Ապրանքներ</h2>
-        <p>Պահեստի ամբողջ ցուցակ — սեղմեք թվի վրա՝ խմբագրելու</p>
+      <div class="ph">
+        <div class="ph-l"><h2>Ապրանքներ</h2><p>Ամբողջ ցուցակ · click = խ-ե</p></div>
       </div>
       <div class="card">
-        <div class="table-wrap">
-          <table>
-            <thead><tr>
-              <th>Հ/Հ</th><th>Անվանումը</th><th>Քանակ</th>
-              <th>Ձեռքբ. գին</th><th>Ներդրված</th>
-              <th>Վաճ. գին</th><th>Ակնկ. Եկամուտ</th><th></th>
-            </tr></thead>
-            <tbody id="products-body"></tbody>
-          </table>
-        </div>
+        <div class="tw"><table>
+          <thead><tr><th>#</th><th>SKU</th><th>Ապրանք</th><th>Քանակ</th><th>Ձ. Գ.</th><th>Ն-ված</th><th>Վ. Գ.</th><th>Ակ. Եկ.</th><th>Ավ.</th><th></th></tr></thead>
+          <tbody id="prod-tb"></tbody>
+        </table></div>
       </div>
     </div>
 
-    <!-- Add Product -->
-    <div id="page-add-product" class="page">
-      <div class="page-header">
-        <h2>Ավելացնել ապրանք</h2>
-        <p>Նոր ապրանքի գրանցում</p>
-      </div>
-      <div class="card">
-        <div class="card-title">📦 Ապրանքի տվյալներ</div>
+    <!-- ADD PRODUCT -->
+    <div id="page-add" class="page">
+      <div class="ph"><div class="ph-l"><h2>Ավ. ապրանք</h2><p>Ավ. SKU-ն ավտ. կստ.</p></div></div>
+      <div class="card" style="max-width:640px">
+        <div class="card-h"><div class="card-title"><span class="ctag ctag-p">📦</span>Ապ. տվ.</div></div>
         <div class="form-grid">
-          <div class="field"><label>Անվանումը</label><input type="text" id="p-name" placeholder="Ապրանքի անուն" /></div>
-          <div class="field"><label>Քանակը</label><input type="number" id="p-qty" placeholder="0" min="0" /></div>
-          <div class="field"><label>Ձեռքբ. գինը (֏)</label><input type="number" id="p-buy" placeholder="0" min="0" /></div>
-          <div class="field"><label>Վաճ. գինը (֏)</label><input type="number" id="p-sell" placeholder="0" min="0" /></div>
+          <div class="field"><label>Անվ.</label><input id="p-name" type="text" placeholder="Ապ. անուն"/></div>
+          <div class="field"><label>Քան.</label><input id="p-qty" type="number" min="0" placeholder="0"/></div>
+          <div class="field"><label>Ձ. Գ. (֏)</label><input id="p-buy" type="number" min="0" placeholder="0"/></div>
+          <div class="field"><label>Վ. Գ. (֏)</label><input id="p-sell" type="number" min="0" placeholder="0"/></div>
         </div>
-        <button class="btn btn-primary" id="add-product-btn" onclick="addProduct()">➕ Ավելացնել ապրանք</button>
+        <div class="infobox">🏷️ SKU-ն ավտոմատ կստ. (օր.՝ <span style="font-family:'JetBrains Mono',monospace">APR-K7MN2X</span>). Նույն ապ. տ. գ. = տ. SKU</div>
+        <button class="btn btn-p" id="add-btn" onclick="addProduct()">➕ Ավ. ապ.</button>
       </div>
     </div>
 
-    <!-- Sell -->
+    <!-- BULK IMPORT -->
+    <div id="page-import" class="page">
+      <div class="ph">
+        <div class="ph-l"><h2>Bulk Import</h2><p>CSV ֆայլ — մի քանի ապ. միաժ.</p></div>
+        <div class="ph-r">
+          <button class="btn btn-teal" onclick="downloadTemplate()">📄 Template ներ.</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-h"><div class="card-title"><span class="ctag ctag-o">📥</span>CSV ֆ. ներ.</div></div>
+        <div class="warnbox">⚠️ CSV-ն պ. ունենա 4 սյուն՝ <b>name, quantity, purchasePrice, salePrice</b> — 1-ին տ. վ. (header). Ն. template-ը ➡️</div>
+
+        <div class="drop-area" id="drop-area" onclick="document.getElementById('file-input').click()"
+             ondragover="ev(event)" ondrop="drop(event)">
+          <div class="drop-icon">📂</div>
+          <p>Drag & drop CSV <strong>կամ</strong> click</p>
+          <p style="font-size:12px;margin-top:6px;color:var(--muted)">Ֆ. ձ.՝ .csv · max 500 ապ.</p>
+        </div>
+        <input type="file" id="file-input" accept=".csv" onchange="handleFile(event)"/>
+
+        <div id="import-preview" style="display:none">
+          <div class="successbox" id="import-count"></div>
+          <div class="preview-wrap">
+            <table>
+              <thead><tr><th>#</th><th>Անուն</th><th>Քան.</th><th>Ձ. Գ.</th><th>Վ. Գ.</th></tr></thead>
+              <tbody id="import-tb"></tbody>
+            </table>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:4px">
+            <button class="btn btn-p" id="import-btn" onclick="importProducts()">✅ Ներ. բ. ու.</button>
+            <button class="btn btn-ghost" onclick="clearImport()">✖ Չ-ել</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SELL -->
     <div id="page-sell" class="page">
-      <div class="page-header">
-        <h2>Գրանցել վաճառք</h2>
-        <p>Ապրանքի վաճառք</p>
-      </div>
-      <div class="card">
-        <div class="card-title">💰 Վաճառքի տվյալներ</div>
+      <div class="ph"><div class="ph-l"><h2>Գ. վ.</h2><p>Ապ. վ.</p></div></div>
+      <div class="card" style="max-width:580px">
+        <div class="card-h"><div class="card-title"><span class="ctag ctag-g">💰</span>Վ. տ.</div></div>
         <div class="form-grid">
-          <div class="field"><label>Ապրանք</label><select id="s-product"><option value="">— Ընտրել —</option></select></div>
-          <div class="field"><label>Քանակ</label><input type="number" id="s-qty" placeholder="1" min="1" value="1" /></div>
-          <div class="field"><label>Վաճ. գինը (֏)</label><input type="number" id="s-price" placeholder="0" min="0" /></div>
+          <div class="field" style="grid-column:1/-1">
+            <label>Ապ.</label>
+            <select id="s-prod"><option value="">— Ընտ. —</option></select>
+          </div>
+          <div class="field"><label>Քան.</label><input id="s-qty" type="number" min="1" value="1"/></div>
+          <div class="field"><label>Վ. Գ. (֏)</label><input id="s-price" type="number" min="0" placeholder="0"/></div>
         </div>
-        <div id="sell-stock-info" style="font-size:13px;color:var(--muted);margin-bottom:14px;"></div>
-        <button class="btn btn-success" id="sell-btn" onclick="recordSale()">✅ Հաստատել վաճառքը</button>
+        <div id="s-info" style="display:none"></div>
+        <button class="btn btn-g" id="sell-btn" onclick="recordSale()">✅ Հ. վ.</button>
       </div>
     </div>
 
-    <!-- Sales History -->
-    <div id="page-sales-history" class="page">
-      <div class="page-header">
-        <h2>Վաճառքների պատմություն</h2>
-        <p>Ըստ ամիս — ֆիլտր</p>
+    <!-- HISTORY -->
+    <div id="page-history" class="page">
+      <div class="ph"><div class="ph-l"><h2>Վ. Պ.</h2><p>Բ. վ-ք</p></div></div>
+      <div class="filters">
+        <select id="f-m" onchange="renderHistory()"><option value="">Բ. ամ.</option></select>
+        <select id="f-y" onchange="renderHistory()"><option value="">Բ. տ.</option></select>
       </div>
-      <div class="filter-row">
-        <select id="filter-month" onchange="renderSalesHistory()"><option value="">Բոլոր ամիսները</option></select>
-        <select id="filter-year"  onchange="renderSalesHistory()"><option value="">Բոլոր տարիները</option></select>
-      </div>
-      <div class="month-summary" id="month-summary" style="display:none;">
-        <div class="month-stat"><div class="ms-label">Վաճառք</div><div class="ms-val accent" id="ms-count">0</div></div>
-        <div class="month-stat"><div class="ms-label">Ընդ. Եկամուտ</div><div class="ms-val green" id="ms-income">0 ֏</div></div>
-        <div class="month-stat"><div class="ms-label">Ամենաշատ</div><div class="ms-val orange" id="ms-top">—</div></div>
+      <div class="sumbar" id="sumbar" style="display:none">
+        <div class="sumb"><span class="sumb-ico">🧾</span><div><div class="sumb-label">Վ-ք</div><div class="sumb-val cv" id="sm-c">0</div></div></div>
+        <div class="sumb"><span class="sumb-ico">💰</span><div><div class="sumb-label">Ընդ. Եկ.</div><div class="sumb-val cg" id="sm-i">0</div></div></div>
+        <div class="sumb"><span class="sumb-ico">🏆</span><div><div class="sumb-label">Ամ. շ.</div><div class="sumb-val co" id="sm-t">—</div></div></div>
       </div>
       <div class="card">
-        <div class="table-wrap">
-          <table>
-            <thead><tr>
-              <th>Ամսաթիվ</th><th>Ապրանք</th><th>Քանակ</th>
-              <th>Գնով (1 հ.)</th><th>Ընդ. Եկամուտ</th><th></th>
-            </tr></thead>
-            <tbody id="sales-body"></tbody>
-          </table>
-        </div>
+        <div class="tw"><table>
+          <thead><tr><th>Ա-թ</th><th>SKU</th><th>Ապ.</th><th>Քան.</th><th>Գ./հ.</th><th>Ընդ.</th><th></th></tr></thead>
+          <tbody id="hist-tb"></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- SELL-THROUGH TRACKER -->
+    <div id="page-tracker" class="page">
+      <div class="ph"><div class="ph-l"><h2>Sell-through</h2><p>Ապ. ք. ժ. կ. են վ.</p></div></div>
+      <div class="card">
+        <div class="tw"><table>
+          <thead><tr><th>SKU</th><th>Ապ.</th><th>Ն-ված</th><th>Վ. ք.</th><th>Ե-ն</th><th>Արդ. Պ.</th><th>Կ. վ. ժ.</th></tr></thead>
+          <tbody id="track-tb"></tbody>
+        </table></div>
       </div>
     </div>
 
   </main>
 </div>
-
 <div id="toast"></div>
 
 <script>
-// ── Config ────────────────────────────────────────────────────────
-const CFG_KEY = 'shop_mgr_script_url';
-let SCRIPT_URL = '';
+// ── Config ────────────────────────────────────────────────────
+const SKEY = 'shop_v4_url';
+let URL_BASE = '';
+let S = { products:[], sales:[] };
+let importData = [];
 
-// ── State ─────────────────────────────────────────────────────────
-let state = { products: [], sales: [] };
-const MONTHS_HY = ['Հունվար','Փետրվար','Մարտ','Ապրիլ','Մայիս','Հունիս',
-                   'Հուլիս','Օգոստոս','Սեպտեմբեր','Հոկտեմբեր','Նոյեմբեր','Դեկտեմբեր'];
+const MO = ['Հունվ.','Փետ.','Մարտ','Ապ.','Մայ.','Հ-ս','Հ-ս','Օ-ս','Սեպ.','Հ-ր','Նոյ.','Դեկ.'];
+const MF = ['Հունվար','Փետրվար','Մարտ','Ապրիլ','Մայիս','Հունիս','Հուլիս','Օգոստ.','Սեպ.','Հ-ր','Նոյ.','Դեկ.'];
 
-// ── Boot ──────────────────────────────────────────────────────────
+// ── Boot ──────────────────────────────────────────────────────
 function init() {
-  const saved = localStorage.getItem(CFG_KEY);
-  if (saved) {
-    SCRIPT_URL = saved;
-    document.getElementById('setup-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'flex';
-    loadData();
-  }
+  const s = localStorage.getItem(SKEY);
+  if (s) { URL_BASE = s; launch(); }
 }
 
 async function saveConfig() {
   const url = document.getElementById('cfg-url').value.trim();
-  const errEl = document.getElementById('setup-error');
-  errEl.style.display = 'none';
-
+  const err = document.getElementById('sf-err');
+  err.style.display = 'none';
   if (!url.includes('script.google.com')) {
-    errEl.textContent = 'Սխալ URL — պետք է պարունակի script.google.com';
-    errEl.style.display = 'block'; return;
+    err.textContent = 'Սխ. URL — script.google.com հ.';
+    err.style.display = 'block'; return;
   }
-
-  SCRIPT_URL = url;
-  showLoading('Ստուգվում է կապը...');
+  URL_BASE = url;
+  showOv('Ստ. կ...');
   try {
-    const res = await apiGet('getData');
-    if (res.error) throw new Error(res.error);
-    localStorage.setItem(CFG_KEY, url);
-    document.getElementById('setup-screen').style.display = 'none';
+    const r = await get('getData');
+    if (r.error) throw new Error(r.error);
+    localStorage.setItem(SKEY, url);
+    S = { products: r.products||[], sales: r.sales||[] };
+    document.getElementById('setup').style.display = 'none';
     document.getElementById('app').style.display = 'flex';
-    state = { products: res.products || [], sales: res.sales || [] };
-    render();
-    hideLoading();
+    render(); hideOv();
   } catch(e) {
-    hideLoading();
-    errEl.textContent = 'Չի կարողացել կապ հաստատել: ' + e.message;
-    errEl.style.display = 'block';
-    SCRIPT_URL = '';
+    hideOv(); URL_BASE = '';
+    err.textContent = 'Կ. չ.: ' + e.message;
+    err.style.display = 'block';
   }
 }
 
 function openSettings() {
-  document.getElementById('cfg-url').value = SCRIPT_URL;
-  document.getElementById('setup-error').style.display = 'none';
-  document.getElementById('setup-screen').style.display = 'flex';
+  document.getElementById('cfg-url').value = URL_BASE;
+  document.getElementById('sf-err').style.display = 'none';
+  document.getElementById('setup').style.display = 'flex';
 }
 
-// ── API ───────────────────────────────────────────────────────────
-async function apiGet(action) {
-  const url = `${SCRIPT_URL}?action=${action}`;
-  const r = await fetch(url);
-  if (!r.ok) throw new Error('HTTP ' + r.status);
+function launch() {
+  document.getElementById('setup').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  loadData();
+}
+
+// ── API ───────────────────────────────────────────────────────
+async function get(action) {
+  const r = await fetch(`${URL_BASE}?action=${action}`);
+  if (!r.ok) throw new Error('HTTP '+r.status);
   return r.json();
 }
-
-async function apiPost(body) {
-  // Apps Script requires no-cors from external domains,
-  // so we use a redirect trick: send as GET with encoded body
-  // for write operations we use the fetch with mode no-cors then reload
-  const url = SCRIPT_URL;
-  const r = await fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(body),
-    headers: { 'Content-Type': 'text/plain' } // text/plain avoids CORS preflight
-  });
-  const text = await r.text();
-  try { return JSON.parse(text); }
-  catch { return { ok: true }; }
+async function post(body) {
+  const r = await fetch(URL_BASE, { method:'POST', body:JSON.stringify(body), headers:{'Content-Type':'text/plain'} });
+  const t = await r.text();
+  try { return JSON.parse(t); } catch { return { ok:true }; }
 }
 
-// ── Data ──────────────────────────────────────────────────────────
+// ── Load ──────────────────────────────────────────────────────
 async function loadData() {
-  showLoading('Բեռնվում է...');
+  showOv('Բ-ում...');
   try {
-    const res = await apiGet('getData');
-    if (res.error) throw new Error(res.error);
-    state.products = res.products || [];
-    state.sales    = res.sales    || [];
+    const r = await get('getData');
+    if (r.error) throw new Error(r.error);
+    S = { products: r.products||[], sales: r.sales||[] };
     render();
-  } catch(e) {
-    toast('Բեռնման սխալ: ' + e.message, 'error');
-  }
-  hideLoading();
+  } catch(e) { toast('Սխ: '+e.message,'error'); }
+  hideOv();
 }
 
-// ── Actions ───────────────────────────────────────────────────────
+// ── Actions ───────────────────────────────────────────────────
 async function addProduct() {
-  const name  = document.getElementById('p-name').value.trim();
-  const qty   = document.getElementById('p-qty').value;
-  const buy   = document.getElementById('p-buy').value;
-  const sell  = document.getElementById('p-sell').value;
-  if (!name || !qty || !buy || !sell) return toast('Լրացրեք բոլոր դաշտերը', 'error');
-
-  const btn = document.getElementById('add-product-btn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> Պահվում...';
+  const name = document.getElementById('p-name').value.trim();
+  const qty  = document.getElementById('p-qty').value;
+  const buy  = document.getElementById('p-buy').value;
+  const sell = document.getElementById('p-sell').value;
+  if (!name||!qty||!buy||!sell) return toast('Լ-ք բ. դ.','error');
+  const btn = document.getElementById('add-btn');
+  btn.disabled=true; btn.innerHTML='<span class="spin"></span> Պ-ում...';
   try {
-    const res = await apiPost({ action:'addProduct', name, quantity:Number(qty), purchasePrice:Number(buy), salePrice:Number(sell) });
-    if (res.error) throw new Error(res.error);
-    toast('✅ Ապրանքն ավելացվեց!', 'success');
-    ['p-name','p-qty','p-buy','p-sell'].forEach(id => document.getElementById(id).value = '');
+    const r = await post({action:'addProduct',name,quantity:+qty,purchasePrice:+buy,salePrice:+sell});
+    if (r.error) throw new Error(r.error);
+    toast(`✅ Ավ.! SKU: ${r.sku}`,'success');
+    ['p-name','p-qty','p-buy','p-sell'].forEach(id=>document.getElementById(id).value='');
     await loadData();
-  } catch(e) { toast('Սխալ: ' + e.message, 'error'); }
-  btn.disabled = false;
-  btn.innerHTML = '➕ Ավելացնել ապրանք';
+  } catch(e) { toast('Սխ: '+e.message,'error'); }
+  btn.disabled=false; btn.innerHTML='➕ Ավ. ապ.';
 }
 
-async function deleteProduct(id) {
-  if (!confirm('Ջնջե՞լ ապրանքը')) return;
-  showLoading('Ջնջվում...');
+async function deleteProduct(sku) {
+  if (!confirm('Ջ-ե՞ ապ.')) return;
+  showOv('Ջ-ում...');
   try {
-    const res = await apiPost({ action:'deleteProduct', id });
-    if (res.error) throw new Error(res.error);
-    toast('🗑 Ջնջվեց', 'success');
-    await loadData();
-  } catch(e) { toast('Սխալ: ' + e.message, 'error'); hideLoading(); }
+    const r = await post({action:'deleteProduct',sku});
+    if (r.error) throw new Error(r.error);
+    toast('🗑 Ջ.','success'); await loadData();
+  } catch(e) { toast('Սխ: '+e.message,'error'); hideOv(); }
 }
 
-async function updateProductField(id, field, value) {
-  showLoading('Թարմացվում...');
+async function updateField(sku, field, value) {
+  showOv('Թ-ում...');
   try {
-    const res = await apiPost({ action:'updateProduct', id, field, value });
-    if (res.error) throw new Error(res.error);
-    toast('✅ Թարմացվեց', 'success');
-    await loadData();
-  } catch(e) { toast('Սխալ: ' + e.message, 'error'); hideLoading(); }
+    const r = await post({action:'updateProduct',sku,field,value});
+    if (r.error) throw new Error(r.error);
+    toast('✅ Պ.','success'); await loadData();
+  } catch(e) { toast('Սխ: '+e.message,'error'); hideOv(); }
 }
 
 async function recordSale() {
-  const productId = document.getElementById('s-product').value;
-  const qty       = Number(document.getElementById('s-qty').value);
-  const price     = Number(document.getElementById('s-price').value);
-  if (!productId || !qty || !price) return toast('Լրացրեք բոլոր դաշտերը', 'error');
-
-  const product = state.products.find(p => p.id === productId);
-  if (!product) return toast('Ապրանք չի գտնվել', 'error');
-  if (product.quantity < qty) return toast('Պահեստում բավարար քանակ չկա', 'error');
-
+  const sku   = document.getElementById('s-prod').value;
+  const qty   = +document.getElementById('s-qty').value;
+  const price = +document.getElementById('s-price').value;
+  if (!sku||!qty||!price) return toast('Լ-ք բ. դ.','error');
+  const p = S.products.find(x=>x.sku===sku);
+  if (!p) return toast('Ապ. չ.','error');
+  if (p.quantity < qty) return toast('Բ. ք. չ.','error');
   const btn = document.getElementById('sell-btn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> Գրանցվում...';
+  btn.disabled=true; btn.innerHTML='<span class="spin"></span>';
   try {
-    const res = await apiPost({ action:'addSale', productId, productName:product.name, quantity:qty, salePrice:price });
-    if (res.error) throw new Error(res.error);
-    toast('✅ Վաճառքը գրանցվեց!', 'success');
-    document.getElementById('s-product').value = '';
-    document.getElementById('s-qty').value = '1';
-    document.getElementById('s-price').value = '';
-    document.getElementById('sell-stock-info').textContent = '';
-    await loadData();
-    populateSellDropdown();
-  } catch(e) { toast('Սխալ: ' + e.message, 'error'); }
-  btn.disabled = false;
-  btn.innerHTML = '✅ Հաստատել վաճառքը';
+    const r = await post({action:'addSale',sku,productName:p.name,quantity:qty,salePrice:price});
+    if (r.error) throw new Error(r.error);
+    toast('✅ Վ. գ.!','success');
+    document.getElementById('s-prod').value='';
+    document.getElementById('s-qty').value='1';
+    document.getElementById('s-price').value='';
+    document.getElementById('s-info').style.display='none';
+    await loadData(); fillSellDrop();
+  } catch(e) { toast('Սխ: '+e.message,'error'); }
+  btn.disabled=false; btn.innerHTML='✅ Հ. վ.';
 }
 
 async function deleteSale(id) {
-  if (!confirm('Ջնջե՞լ վաճառքը (քանակը կվերականգնվի)')) return;
-  showLoading('Ջնջվում...');
+  if (!confirm('Ջ-ե՞ (ք. կ-ի)')) return;
+  showOv('Ջ-ում...');
   try {
-    const res = await apiPost({ action:'deleteSale', id });
-    if (res.error) throw new Error(res.error);
-    toast('🗑 Ջնջվեց', 'success');
+    const r = await post({action:'deleteSale',id});
+    if (r.error) throw new Error(r.error);
+    toast('🗑 Ջ.','success'); await loadData();
+  } catch(e) { toast('Սխ: '+e.message,'error'); hideOv(); }
+}
+
+// ── Bulk import ───────────────────────────────────────────────
+function downloadTemplate() {
+  const csv = 'name,quantity,purchasePrice,salePrice\nԱյ Ֆոն 15,10,180000,220000\nՍամսու Ե25,5,95000,130000\n';
+  const a = Object.assign(document.createElement('a'),{
+    href: URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'})),
+    download: 'import-template.csv'
+  });
+  a.click(); URL.revokeObjectURL(a.href);
+  toast('📄 Template ն.','info');
+}
+
+function ev(e) { e.preventDefault(); document.getElementById('drop-area').classList.add('over'); }
+
+function drop(e) {
+  e.preventDefault();
+  document.getElementById('drop-area').classList.remove('over');
+  const file = e.dataTransfer.files[0];
+  if (file) parseCSV(file);
+}
+
+function handleFile(e) {
+  const file = e.target.files[0];
+  if (file) parseCSV(file);
+}
+
+function parseCSV(file) {
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const text = ev.target.result;
+    const lines = text.split(/\r?\n/).filter(l=>l.trim());
+    if (lines.length < 2) return toast('CSV-ն պ. 2+ տ.','error');
+
+    // Skip header row
+    const rows = lines.slice(1);
+    const items = [];
+    const errors = [];
+
+    rows.forEach((line, i) => {
+      // Handle quoted CSV values
+      const cols = line.match(/(".*?"|[^,]+)(?=,|$)/g) || line.split(',');
+      const clean = cols.map(c => c.replace(/^"|"$/g,'').trim());
+      const [name, qty, buy, sell] = clean;
+      if (!name || isNaN(+qty) || isNaN(+buy) || isNaN(+sell)) {
+        errors.push(`Տ. ${i+2}: '${line}'`);
+        return;
+      }
+      items.push({ name: name.trim(), quantity: +qty, purchasePrice: +buy, salePrice: +sell });
+    });
+
+    if (errors.length) toast(`⚠️ ${errors.length} սխ. տ. բ.`,'error');
+    if (!items.length) return;
+
+    importData = items;
+    showImportPreview(items);
+  };
+  reader.readAsText(file, 'UTF-8');
+}
+
+function showImportPreview(items) {
+  document.getElementById('import-count').textContent = `✅ ${items.length} ապ. պ. ն.`;
+  const tbody = document.getElementById('import-tb');
+  tbody.innerHTML = items.map((p,i) => `
+    <tr>
+      <td class="c-muted">${i+1}</td>
+      <td><strong>${p.name}</strong></td>
+      <td><span class="badge bt">${p.quantity}</span></td>
+      <td class="co">${fmt(p.purchasePrice)}</td>
+      <td class="cg">${fmt(p.salePrice)}</td>
+    </tr>`).join('');
+  document.getElementById('import-preview').style.display = 'block';
+}
+
+async function importProducts() {
+  if (!importData.length) return;
+  const btn = document.getElementById('import-btn');
+  btn.disabled=true; btn.innerHTML='<span class="spin"></span> Ն-ում...';
+  try {
+    const r = await post({ action:'addProducts', items: importData });
+    if (r.error) throw new Error(r.error);
+    toast(`✅ ${r.count} ապ. ն.! SKU-ն ա-ռ.`,'success');
+    clearImport();
     await loadData();
-  } catch(e) { toast('Սխալ: ' + e.message, 'error'); hideLoading(); }
+  } catch(e) { toast('Սխ: '+e.message,'error'); }
+  btn.disabled=false; btn.innerHTML='✅ Ն. բ. ու.';
 }
 
-// ── Inline Edit ───────────────────────────────────────────────────
-function makeEditable(td, productId, field, currentVal) {
-  td.innerHTML = `<input class="inline-edit" type="number" value="${currentVal}" min="0" />`;
-  const inp = td.querySelector('input');
-  inp.focus(); inp.select();
-  inp.addEventListener('blur', async () => {
-    const v = inp.value.trim();
-    if (v !== '' && Number(v) !== currentVal) await updateProductField(productId, field, v);
-    else render();
-  });
-  inp.addEventListener('keydown', e => {
-    if (e.key === 'Enter') inp.blur();
-    if (e.key === 'Escape') render();
-  });
+function clearImport() {
+  importData = [];
+  document.getElementById('import-preview').style.display = 'none';
+  document.getElementById('file-input').value = '';
 }
 
-// ── Render ────────────────────────────────────────────────────────
-function fmt(n) { return Math.round(n).toLocaleString('hy-AM') + ' ֏'; }
+// ── Inline edit ───────────────────────────────────────────────
+function editCell(td, sku, field, cur) {
+  td.innerHTML=`<input class="ie" type="number" value="${cur}" min="0">`;
+  const inp=td.querySelector('input'); inp.focus(); inp.select();
+  inp.onblur=async()=>{ const v=inp.value.trim(); if(v!==''&&+v!==cur) await updateField(sku,field,v); else render(); };
+  inp.onkeydown=e=>{ if(e.key==='Enter') inp.blur(); if(e.key==='Escape') render(); };
+}
+
+// ── Render ────────────────────────────────────────────────────
+const fmt = n => Number(n).toLocaleString('hy-AM') + ' ֏';
 
 function render() {
-  renderDashboard();
-  renderProducts();
-  renderSalesHistory();
+  renderDash(); renderProducts(); renderHistory(); renderTracker();
 }
 
-function renderDashboard() {
+function renderDash() {
   const now = new Date();
-  const monthSales = state.sales.filter(s => {
-    const d = new Date(s.date);
-    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  const mSales = S.sales.filter(s => {
+    const p = s.date; // dd-mm-yyyy hh:mm
+    if (p.length >= 10) {
+      const m = +p.slice(3,5)-1, y = +p.slice(6,10);
+      return m === now.getMonth() && y === now.getFullYear();
+    }
+    return false;
   });
-  const invested    = state.products.reduce((s,p) => s + p.purchasePrice * p.quantity, 0);
-  const expected    = state.products.reduce((s,p) => s + p.salePrice     * p.quantity, 0);
-  const monthIncome = monthSales.reduce((s,sale) => s + sale.salePrice * sale.quantity, 0);
+  const inv   = S.products.reduce((a,p)=>a+p.purchasePrice*p.quantity,0);
+  const exp   = S.products.reduce((a,p)=>a+p.salePrice*p.quantity,0);
+  const mInc  = mSales.reduce((a,s)=>a+s.total,0);
+  const low   = S.products.filter(p=>p.quantity<=2).length;
 
-  document.getElementById('stat-products').textContent    = state.products.length;
-  document.getElementById('stat-invested').textContent    = fmt(invested);
-  document.getElementById('stat-expected').textContent    = fmt(expected);
-  document.getElementById('stat-month-income').textContent = fmt(monthIncome);
+  document.getElementById('st-cnt').textContent   = S.products.length;
+  document.getElementById('st-cnt-s').textContent = low?`⚠️ ${low} ք. գ. վ.`:'✓ ամ. կ.';
+  document.getElementById('st-inv').textContent   = fmt(inv);
+  document.getElementById('st-exp').textContent   = fmt(exp);
+  document.getElementById('st-exp-s').textContent = inv>0?`+${fmt(exp-inv)} շ.`:'';
+  document.getElementById('st-mon').textContent   = fmt(mInc);
+  document.getElementById('st-mon-s').textContent = `${mSales.length} վ. ${MO[now.getMonth()]}`;
 
-  const tbody = document.getElementById('dash-products-body');
-  tbody.innerHTML = state.products.length
-    ? state.products.map(p => `<tr>
-        <td>${p.name}</td>
-        <td><span class="qty-badge ${p.quantity > 2 ? 'qty-ok':'qty-low'}">${p.quantity}</span></td>
-        <td class="price">${fmt(p.salePrice)}</td>
-        <td class="income">${fmt(p.salePrice * p.quantity)}</td>
-      </tr>`).join('')
-    : '<tr><td colspan="4" class="empty">Ապրանք չկա — ավելացրեք առաջինը! 📦</td></tr>';
+  const tb = document.getElementById('dash-tb');
+  if (!S.products.length) {
+    tb.innerHTML='<tr><td colspan="6" class="empty"><span class="ei">📦</span>Ն. ա.!</td></tr>';
+    return;
+  }
+  tb.innerHTML = S.products.map(p=>`<tr>
+    <td><span class="sku">${p.sku}</span></td>
+    <td><strong>${p.name}</strong></td>
+    <td><span class="badge ${p.quantity>2?'bg':'br'}">${p.quantity}</span></td>
+    <td class="co">${fmt(p.salePrice)}</td>
+    <td class="cg">${fmt(p.salePrice*p.quantity)}</td>
+    <td><span class="badge ${p.quantity>2?'bt':'bo'}">${p.quantity>2?'✓ Կ.':'⚠ Ք.'}</span></td>
+  </tr>`).join('');
 }
 
 function renderProducts() {
-  const tbody = document.getElementById('products-body');
-  tbody.innerHTML = state.products.length
-    ? state.products.map((p,i) => `<tr>
-        <td style="color:var(--muted)">${i+1}</td>
-        <td><strong>${p.name}</strong></td>
-        <td>
-          <span class="qty-badge ${p.quantity>2?'qty-ok':'qty-low'} editable"
-            onclick="makeEditable(this.parentElement,'${p.id}','quantity',${p.quantity})"
-            title="Սեղմեք խմբ.">${p.quantity}</span>
-        </td>
-        <td class="price editable"
-            onclick="makeEditable(this,'${p.id}','purchasePrice',${p.purchasePrice})"
-            title="Սեղմ.">${fmt(p.purchasePrice)}</td>
-        <td>${fmt(p.purchasePrice * p.quantity)}</td>
-        <td class="price editable"
-            onclick="makeEditable(this,'${p.id}','salePrice',${p.salePrice})"
-            title="Սեղմ.">${fmt(p.salePrice)}</td>
-        <td class="income">${fmt(p.salePrice * p.quantity)}</td>
-        <td><button class="btn btn-danger" onclick="deleteProduct('${p.id}')">🗑</button></td>
-      </tr>`).join('')
-    : '<tr><td colspan="8" class="empty">Ապրանք չկա 📦</td></tr>';
+  const tb = document.getElementById('prod-tb');
+  if (!S.products.length) {
+    tb.innerHTML='<tr><td colspan="10" class="empty"><span class="ei">📦</span>Ա. չ.</td></tr>';
+    return;
+  }
+  tb.innerHTML = S.products.map((p,i)=>`<tr>
+    <td class="cv" style="font-size:12px">${i+1}</td>
+    <td><span class="sku">${p.sku}</span></td>
+    <td><strong>${p.name}</strong></td>
+    <td class="edit-cell" onclick="editCell(this,'${p.sku}','quantity',${p.quantity})" title="Խ.">
+      <span class="ev"><span class="badge ${p.quantity>2?'bg':'br'}">${p.quantity}</span></span></td>
+    <td class="edit-cell co" onclick="editCell(this,'${p.sku}','purchasePrice',${p.purchasePrice})" title="Խ.">
+      <span class="ev">${fmt(p.purchasePrice)}</span></td>
+    <td style="color:var(--muted);font-size:12px">${fmt(p.purchasePrice*p.quantity)}</td>
+    <td class="edit-cell co" onclick="editCell(this,'${p.sku}','salePrice',${p.salePrice})" title="Խ.">
+      <span class="ev">${fmt(p.salePrice)}</span></td>
+    <td class="cg">${fmt(p.salePrice*p.quantity)}</td>
+    <td style="font-size:11px;color:var(--muted)">${p.addedAt}</td>
+    <td><button class="btn btn-r" onclick="deleteProduct('${p.sku}')">🗑</button></td>
+  </tr>`).join('');
 }
 
-function populateSellDropdown() {
-  const sel = document.getElementById('s-product');
-  sel.innerHTML = '<option value="">— Ընտրել ապրանք —</option>' +
-    state.products.filter(p => p.quantity > 0).map(p =>
-      `<option value="${p.id}" data-price="${p.salePrice}" data-qty="${p.quantity}">${p.name} (${p.quantity} հ.)</option>`
+function fillSellDrop() {
+  const sel = document.getElementById('s-prod');
+  sel.innerHTML = '<option value="">— Ընտ. ապ. —</option>' +
+    S.products.filter(p=>p.quantity>0).map(p=>
+      `<option value="${p.sku}" data-price="${p.salePrice}" data-qty="${p.quantity}" data-name="${p.name}">
+        ${p.name} · ${p.sku} · ${p.quantity} հ.</option>`
     ).join('');
   sel.onchange = () => {
-    const opt = sel.options[sel.selectedIndex];
-    if (opt.value) {
-      document.getElementById('s-price').value = opt.dataset.price;
-      document.getElementById('sell-stock-info').textContent = `Պահեստում կա: ${opt.dataset.qty} հ.`;
-    } else {
-      document.getElementById('sell-stock-info').textContent = '';
-    }
+    const o = sel.options[sel.selectedIndex];
+    const info = document.getElementById('s-info');
+    if (o.value) {
+      document.getElementById('s-price').value = o.dataset.price;
+      info.className = 'infobox';
+      info.style.display = 'block';
+      info.innerHTML = `🏷️ <b>${o.dataset.name}</b> &nbsp;·&nbsp; SKU: <span style="font-family:'JetBrains Mono',monospace">${o.value}</span><br>📦 Պ-ում: <b>${o.dataset.qty} հ.</b> &nbsp;·&nbsp; Վ. Գ: <b>${fmt(+o.dataset.price)}</b>`;
+    } else { info.style.display = 'none'; }
   };
 }
 
-function populateFilters() {
-  const years   = [...new Set(state.sales.map(s => new Date(s.date).getFullYear()))].sort((a,b) => b-a);
-  const ySel    = document.getElementById('filter-year');
-  const curYear = ySel.value;
-  ySel.innerHTML = '<option value="">Բոլոր տարիները</option>' +
-    years.map(y => `<option value="${y}" ${String(y)===curYear?'selected':''}>${y}</option>`).join('');
-
-  const mSel    = document.getElementById('filter-month');
-  const curMonth = mSel.value;
-  mSel.innerHTML = '<option value="">Բոլոր ամիսները</option>' +
-    MONTHS_HY.map((m,i) => `<option value="${i}" ${String(i)===curMonth?'selected':''}>${m}</option>`).join('');
+function fillFilters() {
+  const years = [...new Set(S.sales.map(s=>s.date.slice(6,10)).filter(Boolean))].sort((a,b)=>b-a);
+  const ySel = document.getElementById('f-y'), cy = ySel.value;
+  ySel.innerHTML = '<option value="">Բ. տ.</option>' +
+    years.map(y=>`<option value="${y}"${y===cy?' selected':''}>${y}</option>`).join('');
+  const mSel = document.getElementById('f-m'), cm = mSel.value;
+  mSel.innerHTML = '<option value="">Բ. ամ.</option>' +
+    MF.map((m,i)=>{const v=String(i+1).padStart(2,'0');return `<option value="${v}"${v===cm?' selected':''}>${m}</option>`}).join('');
 }
 
-function renderSalesHistory() {
-  const mf = document.getElementById('filter-month')?.value;
-  const yf = document.getElementById('filter-year')?.value;
-  let sales = [...state.sales].sort((a,b) => new Date(b.date)-new Date(a.date));
-  if (mf !== '' && mf !== undefined) sales = sales.filter(s => new Date(s.date).getMonth() === Number(mf));
-  if (yf) sales = sales.filter(s => new Date(s.date).getFullYear() === Number(yf));
+function renderHistory() {
+  const mf = document.getElementById('f-m')?.value;
+  const yf = document.getElementById('f-y')?.value;
+  let sales = [...S.sales].sort((a,b)=>{
+    const ka = a.date.length>=10?`${a.date.slice(6,10)}-${a.date.slice(3,5)}-${a.date.slice(0,2)}`:'';
+    const kb = b.date.length>=10?`${b.date.slice(6,10)}-${b.date.slice(3,5)}-${b.date.slice(0,2)}`:'';
+    return kb.localeCompare(ka);
+  });
+  if (mf) sales = sales.filter(s=>s.date.slice(3,5)===mf);
+  if (yf) sales = sales.filter(s=>s.date.slice(6,10)===yf);
 
-  if (sales.length > 0) {
-    document.getElementById('month-summary').style.display = 'grid';
-    const income = sales.reduce((s,x) => s + x.salePrice*x.quantity, 0);
-    const topMap = {};
-    sales.forEach(s => { topMap[s.productName] = (topMap[s.productName]||0) + s.quantity; });
-    const top = Object.entries(topMap).sort((a,b)=>b[1]-a[1])[0];
-    document.getElementById('ms-count').textContent  = sales.length;
-    document.getElementById('ms-income').textContent = fmt(income);
-    document.getElementById('ms-top').textContent    = top ? top[0] : '—';
-  } else {
-    document.getElementById('month-summary').style.display = 'none';
+  const sb = document.getElementById('sumbar');
+  if (sales.length) {
+    sb.style.display='grid';
+    const inc = sales.reduce((a,s)=>a+s.total,0);
+    const tm = {}; sales.forEach(s=>{tm[s.productName]=(tm[s.productName]||0)+s.quantity});
+    const top = Object.entries(tm).sort((a,b)=>b[1]-a[1])[0];
+    document.getElementById('sm-c').textContent = sales.length;
+    document.getElementById('sm-i').textContent = fmt(inc);
+    document.getElementById('sm-t').textContent = top?top[0]:'—';
+  } else { sb.style.display='none'; }
+
+  const tb = document.getElementById('hist-tb');
+  if (!sales.length) {
+    tb.innerHTML='<tr><td colspan="7" class="empty"><span class="ei">🗓️</span>Վ. չ. գ.</td></tr>';
+    return;
+  }
+  tb.innerHTML = sales.map(s=>`<tr>
+    <td style="color:var(--muted);font-size:12px">${s.date}</td>
+    <td><span class="sku">${s.sku}</span></td>
+    <td><strong>${s.productName}</strong></td>
+    <td><span class="badge bp">${s.quantity}</span></td>
+    <td class="co">${fmt(s.salePrice)}</td>
+    <td class="cg">${fmt(s.total)}</td>
+    <td><button class="btn btn-r" onclick="deleteSale('${s.id}')">🗑</button></td>
+  </tr>`).join('');
+}
+
+function renderTracker() {
+  const tb = document.getElementById('track-tb');
+  if (!S.products.length) {
+    tb.innerHTML='<tr><td colspan="7" class="empty"><span class="ei">⏱️</span>Ա. չ.</td></tr>';
+    return;
   }
 
-  const tbody = document.getElementById('sales-body');
-  tbody.innerHTML = sales.length
-    ? sales.map(s => `<tr>
-        <td style="color:var(--muted)">${new Date(s.date).toLocaleDateString('hy-AM')}</td>
-        <td>${s.productName}</td>
-        <td>${s.quantity}</td>
-        <td class="price">${fmt(s.salePrice)}</td>
-        <td class="income">${fmt(s.salePrice*s.quantity)}</td>
-        <td><button class="btn btn-danger" onclick="deleteSale('${s.id}')">🗑</button></td>
-      </tr>`).join('')
-    : '<tr><td colspan="6" class="empty">Վաճառք չի գրանցվել 🗓️</td></tr>';
+  // For each product, find all its sales
+  const rows = S.products.map(p => {
+    const pSales = S.sales.filter(s => s.sku === p.sku);
+    const soldQty = pSales.reduce((a,s) => a+s.quantity, 0);
+    const lastSale = pSales.sort((a,b) => b.date.localeCompare(a.date))[0];
+
+    // Days since added
+    let daysSinceAdded = '—';
+    let daysPerUnit = '—';
+    if (p.addedAt && p.addedAt.length >= 10) {
+      const [dd,mm,yyyy] = p.addedAt.slice(0,10).split('-').map(Number);
+      const added = new Date(yyyy, mm-1, dd);
+      const diff  = Math.floor((new Date() - added) / 86400000);
+      daysSinceAdded = diff;
+      if (soldQty > 0) daysPerUnit = (diff / soldQty).toFixed(1) + ' օ/հ';
+    }
+
+    const remaining = p.quantity;
+    let urgency = 'bg', urgencyTxt = '✓';
+    if (remaining === 0) { urgency='br'; urgencyTxt='✗ Վ.'; }
+    else if (remaining <= 2) { urgency='bo'; urgencyTxt='⚠ Ք.'; }
+
+    return `<tr>
+      <td><span class="sku">${p.sku}</span></td>
+      <td><strong>${p.name}</strong></td>
+      <td style="font-size:12px;color:var(--muted)">${p.addedAt||'—'}</td>
+      <td><span class="badge bt">${soldQty}</span></td>
+      <td style="font-size:12px;color:var(--muted)">${daysSinceAdded === '—' ? '—' : daysSinceAdded+' օ'}</td>
+      <td><span class="badge ${urgency}">${remaining}</span></td>
+      <td class="${daysPerUnit==='—'?'':'co'}" style="font-size:12.5px">${daysPerUnit}</td>
+    </tr>`;
+  }).join('');
+  tb.innerHTML = rows;
 }
 
-// ── Navigation ────────────────────────────────────────────────────
-function showPage(name, btn) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+// ── Navigation ────────────────────────────────────────────────
+function go(name, btn) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
   if (btn) btn.classList.add('active');
-  if (name === 'sell') populateSellDropdown();
-  if (name === 'sales-history') populateFilters();
-  render();
+  if (name==='sell')    { fillSellDrop(); render(); }
+  if (name==='history') { fillFilters(); renderHistory(); }
+  if (name==='dashboard'||name==='products'||name==='tracker') render();
 }
 
-// ── CSV Export ────────────────────────────────────────────────────
+// ── CSV export ────────────────────────────────────────────────
 function downloadCSV() {
   const q = v => `"${String(v).replace(/"/g,'""')}"`;
-  let csv = 'Ապրանքների ցուցակ\nԱնվ.,Քան.,Ձ.Գ.,Ներ.Գ.,Վ.Գ.,Ակ.Եկ.\n';
-  state.products.forEach(p => {
-    csv += [q(p.name),p.quantity,p.purchasePrice,p.purchasePrice*p.quantity,p.salePrice,p.salePrice*p.quantity].join(',')+'\n';
+  let csv = 'Ապ. ցուցակ\nSKU,Անուն,Քան.,Ձ.Գ.,Ն.,Վ.Գ.,Ակ.Եկ.,Ավ.\n';
+  S.products.forEach(p => {
+    csv += [p.sku,q(p.name),p.quantity,p.purchasePrice,p.purchasePrice*p.quantity,p.salePrice,p.salePrice*p.quantity,q(p.addedAt)].join(',')+'\n';
   });
-  csv += '\nՎաճառքների պատմություն\nԱմսաթիվ,Ապրանք,Քան.,Գ./հ.,Ընդ.Եկ.\n';
-  state.sales.forEach(s => {
-    csv += [new Date(s.date).toLocaleDateString('hy-AM'),q(s.productName),s.quantity,s.salePrice,s.salePrice*s.quantity].join(',')+'\n';
+  csv += '\nՎ. պ.\nID,SKU,Ապ.,Քան.,Վ.Գ.,Ընդ.,Ա-թ\n';
+  S.sales.forEach(s => {
+    csv += [s.id,s.sku,q(s.productName),s.quantity,s.salePrice,s.total,q(s.date)].join(',')+'\n';
   });
-  const blob = new Blob(['\uFEFF'+csv], { type:'text/csv;charset=utf-8;' });
-  const a = Object.assign(document.createElement('a'), { href:URL.createObjectURL(blob), download:`khanuyt-${new Date().toISOString().slice(0,10)}.csv` });
+  const a = Object.assign(document.createElement('a'),{
+    href: URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'})),
+    download: `shop-${new Date().toISOString().slice(0,10)}.csv`
+  });
   a.click(); URL.revokeObjectURL(a.href);
-  toast('📄 CSV ներբեռնվեց', 'success');
+  toast('📄 CSV ն.','success');
 }
 
-// ── Toast ─────────────────────────────────────────────────────────
-let toastTimer;
-function toast(msg, type='success') {
-  const el = document.getElementById('toast');
-  el.textContent = msg; el.className = 'show '+type;
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.className = '', 3500);
+// ── Toast & overlay ───────────────────────────────────────────
+let _tt;
+function toast(msg,type='success') {
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.className='show '+type;
+  clearTimeout(_tt); _tt=setTimeout(()=>el.className='',3800);
 }
-
-// ── Loading ───────────────────────────────────────────────────────
-function showLoading(msg='Բեռնվում է...') {
-  document.getElementById('loading-text').textContent = msg;
-  document.getElementById('loading-overlay').classList.add('show');
-}
-function hideLoading() {
-  document.getElementById('loading-overlay').classList.remove('show');
-}
+function showOv(msg='...') { document.getElementById('ov-txt').textContent=msg; document.getElementById('ov').classList.add('show'); }
+function hideOv() { document.getElementById('ov').classList.remove('show'); }
 
 init();
 </script>
