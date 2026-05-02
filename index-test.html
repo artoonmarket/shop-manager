@@ -18,496 +18,129 @@
   --text:#e8e8f4;--muted:#6b6b99;--muted2:#9999cc;
 }
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden}
-body::before{content:'';position:fixed;top:-250px;left:-150px;width:600px;height:600px;
-  background:radial-gradient(circle,rgba(124,106,247,.1) 0%,transparent 70%);pointer-events:none;z-index:0}
-body::after{content:'';position:fixed;bottom:-200px;right:-100px;width:500px;height:500px;
-  background:radial-gradient(circle,rgba(45,212,191,.07) 0%,transparent 70%);pointer-events:none;z-index:0}
 
 /* ══ SETUP ══════════════════════════════════════════════════════ */
 #setup{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px}
-.sc{background:var(--s1);border:1px solid var(--border2);border-radius:24px;padding:44px;max-width:560px;width:100%;
-  box-shadow:0 32px 80px rgba(0,0,0,.6);position:relative;overflow:hidden}
-.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#7c6af7,#2dd4bf,#fb923c)}
-.sc-logo{font-size:44px;margin-bottom:18px}
+.sc{background:var(--s1);border:1px solid var(--border2);border-radius:24px;padding:44px;max-width:560px;width:100%;box-shadow:0 32px 80px rgba(0,0,0,.6);position:relative;overflow:hidden}
 .sc h1{font-family:'Noto Serif Armenian',serif;font-size:26px;font-weight:700;margin-bottom:8px}
-.sc-sub{color:var(--muted2);font-size:13.5px;line-height:1.7;margin-bottom:28px}
-.steps{background:var(--s2);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-bottom:24px}
-.step{display:flex;gap:13px;margin-bottom:12px;font-size:13px;color:var(--muted2);line-height:1.6;align-items:flex-start}
-.step:last-child{margin-bottom:0}
-.sn{min-width:22px;height:22px;background:var(--ag);border-radius:50%;display:flex;align-items:center;justify-content:center;
-  font-size:10px;font-weight:700;color:#fff;flex-shrink:0;margin-top:2px}
-.step b{color:var(--text)}.step a{color:var(--accent);text-decoration:none}.step a:hover{text-decoration:underline}
-.step code{background:rgba(124,106,247,.15);color:var(--accent);padding:1px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px}
-.sf-label{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;font-weight:600;margin-bottom:7px}
-.sf-input{width:100%;background:var(--s2);border:1px solid var(--border2);border-radius:12px;padding:12px 16px;
-  color:var(--text);font-size:13.5px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;margin-bottom:16px}
-.sf-input:focus{border-color:var(--accent)}
-.sf-input::placeholder{color:var(--muted);font-size:12.5px}
-.sf-btn{width:100%;padding:14px;background:var(--ag);border:none;border-radius:13px;color:#fff;
-  font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity .2s}
-.sf-btn:hover{opacity:.88}
-.sf-err{margin-top:12px;padding:11px 16px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);
-  border-radius:10px;color:var(--red);font-size:13px;display:none;line-height:1.5}
+.sf-input{width:100%;background:var(--s2);border:1px solid var(--border2);border-radius:12px;padding:12px 16px;color:var(--text);font-size:13.5px;outline:none;margin-bottom:16px}
+.sf-btn{width:100%;padding:14px;background:var(--ag);border:none;border-radius:13px;color:#fff;font-size:14px;font-weight:700;cursor:pointer}
 
 /* ══ LAYOUT ══════════════════════════════════════════════════════ */
 .layout{display:flex;min-height:100vh;position:relative;z-index:1}
 
 /* ══ SIDEBAR ══════════════════════════════════════════════════════ */
-.sidebar{width:252px;background:var(--s1);border-right:1px solid var(--border);
-  display:flex;flex-direction:column;position:fixed;height:100vh;top:0;left:0;overflow-y:auto}
-.sb-top{padding:24px 20px;border-bottom:1px solid var(--border);flex-shrink:0}
-.brand{display:flex;align-items:center;gap:12px}
-.brand-ico{width:40px;height:40px;background:var(--ag);border-radius:11px;
-  display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
-.brand-txt h1{font-family:'Noto Serif Armenian',serif;font-size:13.5px;font-weight:700;line-height:1.3}
-.brand-txt p{font-size:10.5px;color:var(--muted);margin-top:2px}
+.sidebar{width:252px;background:var(--s1);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;height:100vh;top:0;left:0}
+.sb-top{padding:24px 20px;border-bottom:1px solid var(--border)}
+.brand-txt h1{font-family:'Noto Serif Armenian',serif;font-size:13.5px;font-weight:700}
 .nav{padding:14px 10px;flex:1}
-.nav-sec{font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.9px;
-  font-weight:700;padding:0 10px;margin:14px 0 5px}
-.nav-sec:first-child{margin-top:4px}
-.ni{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;
-  font-size:13px;font-weight:500;color:var(--muted);transition:all .16s;margin-bottom:2px;
-  border:none;background:none;width:100%;text-align:left;font-family:'Inter',sans-serif}
-.ni:hover{background:rgba(255,255,255,.05);color:var(--text)}
+.ni{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;font-size:13px;color:var(--muted);background:none;border:none;width:100%;text-align:left;margin-bottom:2px}
 .ni.active{background:rgba(124,106,247,.15);color:var(--accent)}
-.ni.transit-ni.active{background:rgba(245,158,11,.12);color:var(--transit)}
-.ni-icon{width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,.05);
-  display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:background .16s}
-.ni.active .ni-icon{background:rgba(124,106,247,.2)}
-.ni.transit-ni.active .ni-icon{background:rgba(245,158,11,.18)}
-.sb-foot{padding:12px 10px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:7px;flex-shrink:0}
-.sbb{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px;
-  border-radius:10px;border:none;font-size:12.5px;font-weight:600;cursor:pointer;
-  font-family:'Inter',sans-serif;transition:all .16s;width:100%}
-.sbb-p{background:var(--ag);color:#fff}.sbb-p:hover{opacity:.88}
-.sbb-g{background:none;border:1px solid var(--border2);color:var(--muted)}.sbb-g:hover{color:var(--text);border-color:rgba(255,255,255,.22)}
 
 /* ══ MAIN ══════════════════════════════════════════════════════════ */
 .main{margin-left:252px;flex:1;padding:32px 36px;min-height:100vh}
 .page{display:none}.page.active{display:block}
+.ph h2{font-family:'Noto Serif Armenian',serif;font-size:27px;font-weight:700;margin-bottom:20px}
 
-.ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px}
-.ph-l h2{font-family:'Noto Serif Armenian',serif;font-size:27px;font-weight:700}
-.ph-l p{font-size:13px;color:var(--muted);margin-top:5px}
-.ph-r{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-
-/* Stat grid */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+/* Stats */
 .stats-5{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:28px}
-.stat{background:var(--s1);border:1px solid var(--border);border-radius:18px;padding:22px;position:relative;overflow:hidden}
-.stat-glow{position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;opacity:.15;filter:blur(20px)}
+.stat{background:var(--s1);border:1px solid var(--border);border-radius:18px;padding:22px}
 .stat-label{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;font-weight:600;margin-bottom:10px}
-.stat-val{font-size:23px;font-weight:700;line-height:1}
-.stat-sub{font-size:11.5px;color:var(--muted);margin-top:7px}
-.cv{color:var(--accent)}.ct{color:var(--teal)}.co{color:var(--orange)}.cg{color:var(--green)}.cr{color:var(--red)}.cy{color:var(--transit)}
-
-/* Card */
-.card{background:var(--s1);border:1px solid var(--border);border-radius:18px;padding:26px;margin-bottom:22px}
-.card-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:10px}
-.card-title{font-family:'Noto Serif Armenian',serif;font-size:15.5px;font-weight:700;display:flex;align-items:center;gap:10px}
-.ctag{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px}
-.ctag-p{background:rgba(124,106,247,.15)}.ctag-g{background:rgba(52,211,153,.12)}
-.ctag-o{background:rgba(251,146,60,.12)}.ctag-y{background:rgba(245,158,11,.15)}
-
-/* Form */
-.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:14px;margin-bottom:18px}
-.field label{display:block;font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:7px}
-.field input,.field select{width:100%;background:var(--s2);border:1px solid var(--border2);border-radius:11px;
-  padding:11px 14px;color:var(--text);font-size:13.5px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
-.field input:focus,.field select:focus{border-color:var(--accent)}
-.field select option{background:var(--s2)}
-
-/* Buttons */
-.btn{padding:10px 20px;border-radius:10px;border:none;font-size:13px;font-weight:600;
-  cursor:pointer;transition:all .16s;display:inline-flex;align-items:center;gap:8px;
-  font-family:'Inter',sans-serif;white-space:nowrap}
-.btn:disabled{opacity:.4;cursor:not-allowed}
-.btn-p{background:var(--ag);color:#fff}.btn-p:hover:not(:disabled){opacity:.88}
-.btn-g{background:rgba(52,211,153,.12);color:var(--green);border:1px solid rgba(52,211,153,.25)}
-.btn-g:hover:not(:disabled){background:rgba(52,211,153,.22)}
-.btn-r{background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.18);padding:6px 11px;font-size:11.5px}
-.btn-r:hover:not(:disabled){background:rgba(248,113,113,.2)}
-.btn-ghost{background:none;border:1px solid var(--border2);color:var(--muted)}
-.btn-ghost:hover:not(:disabled){color:var(--text);border-color:rgba(255,255,255,.22)}
-.btn-teal{background:rgba(45,212,191,.1);color:var(--teal);border:1px solid rgba(45,212,191,.2)}
-.btn-teal:hover:not(:disabled){background:rgba(45,212,191,.2)}
-.btn-y{background:rgba(245,158,11,.12);color:var(--transit);border:1px solid rgba(245,158,11,.25)}
-.btn-y:hover:not(:disabled){background:rgba(245,158,11,.22)}
-.btn-y-sm{background:rgba(245,158,11,.12);color:var(--transit);border:1px solid rgba(245,158,11,.2);padding:6px 11px;font-size:11.5px}
-.btn-y-sm:hover:not(:disabled){background:rgba(245,158,11,.22)}
+.stat-val{font-size:23px;font-weight:700}
 
 /* Table */
+.card{background:var(--s1);border:1px solid var(--border);border-radius:18px;padding:26px;margin-bottom:22px}
 .tw{overflow-x:auto}
 table{width:100%;border-collapse:separate;border-spacing:0}
-thead th{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;
-  padding:9px 15px;text-align:left;border-bottom:1px solid var(--border);font-weight:700}
-tbody tr{transition:background .12s}
-tbody tr:hover td{background:rgba(255,255,255,.025)}
+thead th{font-size:10px;color:var(--muted);text-transform:uppercase;padding:9px 15px;text-align:left;border-bottom:1px solid var(--border)}
 tbody td{padding:12px 15px;font-size:13.5px;border-bottom:1px solid rgba(255,255,255,.04)}
-tbody tr:last-child td{border-bottom:none}
 
-.sku{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--accent);
-  background:rgba(124,106,247,.1);padding:3px 8px;border-radius:5px;letter-spacing:.5px}
-.tid{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--transit);
-  background:rgba(245,158,11,.1);padding:3px 8px;border-radius:5px;letter-spacing:.3px}
-.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600}
+.sku{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--accent);background:rgba(124,106,247,.1);padding:3px 8px;border-radius:5px}
+.badge{padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600}
 .bg{background:rgba(52,211,153,.12);color:var(--green)}
 .br{background:rgba(248,113,113,.12);color:var(--red)}
-.bp{background:rgba(124,106,247,.12);color:var(--accent)}
-.bo{background:rgba(251,146,60,.12);color:var(--orange)}
-.bt{background:rgba(45,212,191,.12);color:var(--teal)}
-.by{background:rgba(245,158,11,.12);color:var(--transit)}
 
-td.edit-cell{cursor:pointer}
-td.edit-cell:hover .ev{color:var(--accent);border-bottom:1px dashed var(--accent)}
-.ev{display:inline-block}
-td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7px;
-  padding:5px 9px;color:var(--text);font-size:13px;width:110px;font-family:'Inter',sans-serif;outline:none}
+.btn{padding:10px 20px;border-radius:10px;border:none;font-size:13px;font-weight:600;cursor:pointer}
+.btn-p{background:var(--ag);color:#fff}
+.btn-r{background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.18);padding:6px 11px}
 
-/* Summary bar */
-.sumbar{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
-.sumb{background:var(--s2);border:1px solid var(--border);border-radius:13px;padding:16px 18px;display:flex;align-items:center;gap:13px}
-.sumb-ico{font-size:22px}
-.sumb-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
-.sumb-val{font-size:18px;font-weight:700;margin-top:3px}
-
-/* Info boxes */
-.infobox{background:rgba(124,106,247,.08);border:1px solid rgba(124,106,247,.2);
-  border-radius:12px;padding:12px 16px;font-size:13px;color:var(--accent);margin-bottom:14px;line-height:1.5}
-.warnbox{background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.2);
-  border-radius:12px;padding:12px 16px;font-size:13px;color:var(--orange);margin-bottom:14px;line-height:1.5}
-.successbox{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);
-  border-radius:12px;padding:12px 16px;font-size:13px;color:var(--green);margin-bottom:14px;line-height:1.5}
-.transitbox{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);
-  border-radius:12px;padding:12px 16px;font-size:13px;color:var(--transit);margin-bottom:14px;line-height:1.5}
-
-/* Modal */
-.modal-bg{position:fixed;inset:0;background:rgba(7,7,26,.85);display:flex;align-items:center;justify-content:center;z-index:600;padding:20px;backdrop-filter:blur(6px)}
-.modal{background:var(--s1);border:1px solid var(--border2);border-radius:20px;padding:32px;max-width:480px;width:100%;position:relative}
-.modal h3{font-family:'Noto Serif Armenian',serif;font-size:18px;font-weight:700;margin-bottom:20px}
-.modal-close{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;line-height:1}
-.modal-close:hover{color:var(--text)}
-
-/* Import area */
-.drop-area{border:2px dashed var(--border2);border-radius:14px;padding:32px;text-align:center;
-  cursor:pointer;transition:all .2s;background:var(--s2)}
-.drop-area:hover,.drop-area.over{border-color:var(--accent);background:rgba(124,106,247,.07)}
-.drop-area .drop-icon{font-size:36px;margin-bottom:10px}
-.drop-area p{color:var(--muted);font-size:14px}
-.drop-area strong{color:var(--accent)}
-#file-input{display:none}
-
-.preview-wrap{max-height:280px;overflow-y:auto;border:1px solid var(--border);border-radius:10px;margin:16px 0}
-.preview-wrap table thead th{position:sticky;top:0;background:var(--s2);z-index:1}
-
-/* Toast */
-#toast{position:fixed;bottom:24px;right:24px;background:var(--s2);border:1px solid var(--border);
-  border-radius:14px;padding:14px 20px;font-size:13.5px;box-shadow:0 8px 40px rgba(0,0,0,.5);
-  opacity:0;transform:translateY(12px);transition:all .28s;z-index:9999;max-width:320px;line-height:1.4}
-#toast.show{opacity:1;transform:translateY(0)}
-#toast.success{border-color:rgba(52,211,153,.4);color:var(--green)}
-#toast.error{border-color:rgba(248,113,113,.4);color:var(--red)}
-#toast.info{border-color:rgba(124,106,247,.4);color:var(--accent)}
-
-/* Overlay */
-.spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.2);
-  border-top-color:#fff;border-radius:50%;animation:sp .6s linear infinite;vertical-align:middle}
-@keyframes sp{to{transform:rotate(360deg)}}
-#ov{position:fixed;inset:0;background:rgba(7,7,26,.8);display:none;align-items:center;
-  justify-content:center;z-index:500;backdrop-filter:blur(6px)}
+#ov{position:fixed;inset:0;background:rgba(7,7,26,.8);display:none;align-items:center;justify-content:center;z-index:2000}
 #ov.show{display:flex}
-.ov-box{background:var(--s1);border:1px solid var(--border2);border-radius:18px;padding:30px 40px;text-align:center;color:var(--muted);font-size:14px}
-.ov-box .spin{width:30px;height:30px;display:block;margin:0 auto 14px}
-
-.empty{text-align:center;padding:48px;color:var(--muted);font-size:14px}
-.empty .ei{font-size:36px;display:block;margin-bottom:10px;opacity:.4}
 </style>
 </head>
 <body>
 
-<!-- SETUP -->
 <div id="setup">
   <div class="sc">
-    <div class="sc-logo">🛍️</div>
     <h1>Խանութի Կառավարիչ</h1>
-    <p class="sc-sub">Միացրեք ձեր Google Apps Script-ին — տվյալները ապահով կպահվեն ձեր Spreadsheet-ում:</p>
-    <div class="steps">
-      <div class="step"><div class="sn">1</div><div>Google Sheet → <b>Extensions → Apps Script</b></div></div>
-      <div class="step"><div class="sn">2</div><div>Paste արեք <b>Code.gs</b>-ի ամբողջ կոդը → <b>Save</b></div></div>
-      <div class="step"><div class="sn">3</div><div><b>Deploy → New deployment</b> · Տեսակը: <code>Web app</code></div></div>
-      <div class="step"><div class="sn">4</div><div>Գործարկող: <code>Me</code> · Հասանելիություն: <code>Anyone</code> → Deploy</div></div>
-      <div class="step"><div class="sn">5</div><div>Պատճենեք <b>Web App URL</b>-ը և տեղադրեք ներքևում 👇</div></div>
-    </div>
-    <div class="sf-label">Apps Script Web App URL</div>
+    <p style="color:var(--muted); margin-bottom:20px;">Մուտքագրեք Google Web App URL-ը</p>
     <input class="sf-input" type="text" id="cfg-url" placeholder="https://script.google.com/macros/s/.../exec"/>
-    <button class="sf-btn" onclick="saveConfig()">✅ Կապակցել և սկսել</button>
-    <div class="sf-err" id="sf-err"></div>
+    <button class="sf-btn" onclick="saveConfig()">✅ Միացնել</button>
   </div>
 </div>
 
-<!-- LOADING OVERLAY -->
-<div id="ov">
-  <div class="ov-box">
-    <span class="spin"></span>
-    <div id="ov-txt">Բեռնվում է...</div>
-  </div>
-</div>
+<div id="ov"><div style="text-align:center;"><div class="stat-val">Բեռնվում է...</div></div></div>
 
-<!-- TRANSIT → STOCK MODAL -->
-<div id="modal-transit" style="display:none" class="modal-bg">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <h3>📦 Տեղափոխել Պահեստ</h3>
-    <input type="hidden" id="mt-id"/>
-    <div class="transitbox" id="mt-info"></div>
-    <div class="form-grid" style="grid-template-columns:1fr 1fr">
-      <div class="field">
-        <label>Տեղափոխվող Քանակ</label>
-        <input id="mt-qty" type="number" min="1" placeholder="1"/>
-      </div>
-      <div class="field">
-        <label>Վաճառքի Գին (֏)</label>
-        <input id="mt-price" type="number" min="0" placeholder="0"/>
-      </div>
-    </div>
-    <button class="btn btn-g" id="mt-btn" onclick="confirmTransitToStock()">✅ Տեղափոխել Պահեստ</button>
-  </div>
-</div>
-
-<!-- APP -->
 <div class="layout" id="app" style="display:none">
   <aside class="sidebar">
-    <div class="sb-top">
-      <div class="brand">
-        <div class="brand-ico">🛍️</div>
-        <div class="brand-txt">
-          <h1>Խանութ</h1>
-          <p>Կառավարման Համակարգ</p>
-        </div>
-      </div>
-    </div>
+    <div class="sb-top"><div class="brand-txt"><h1>ԽԱՆՈՒԹ</h1></div></div>
     <nav class="nav">
-      <div class="nav-sec">Հիմնական</div>
-      <button class="ni active" onclick="go('dashboard',this)"><span class="ni-icon">📊</span>Ամփոփում</button>
-      <button class="ni" onclick="go('products',this)"><span class="ni-icon">📦</span>Ապրանքներ</button>
-      <div class="nav-sec">Գործողություններ</div>
-      <button class="ni" onclick="go('add',this)"><span class="ni-icon">➕</span>Ավելացնել Ապրանք</button>
-      <button class="ni" onclick="go('import',this)"><span class="ni-icon">📥</span>Զանգվածային Ներմուծում</button>
-      <button class="ni" onclick="go('sell',this)"><span class="ni-icon">💰</span>Գրանցել Վաճառք</button>
-      <div class="nav-sec">Տրանզիտ</div>
-      <button class="ni transit-ni" onclick="go('transit',this)"><span class="ni-icon">🚚</span>Ճանապարհին</button>
-      <button class="ni transit-ni" onclick="go('add-transit',this)"><span class="ni-icon">➕</span>Ավելացնել Տրանզիտ</button>
-      <div class="nav-sec">Վերլուծություն</div>
-      <button class="ni" onclick="go('history',this)"><span class="ni-icon">🗓️</span>Վաճառքի Պատմություն</button>
-      <button class="ni" onclick="go('tracker',this)"><span class="ni-icon">⏱️</span>Վաճառքի Տեմպ</button>
+      <button class="ni active" onclick="go('dashboard',this)">📊 Ամփոփում</button>
+      <button class="ni" onclick="go('products',this)">📦 Ապրանքներ</button>
+      <button class="ni" onclick="go('transit',this)">🚚 Ճանապարհին</button>
+      <button class="ni" onclick="go('sell',this)">💰 Վաճառք</button>
     </nav>
-    <div class="sb-foot">
-      <button class="sbb sbb-p" onclick="downloadCSV()">📄 Ներբեռնել CSV</button>
-      <button class="sbb sbb-g" onclick="openSettings()">⚙️ Կարգավորումներ</button>
-    </div>
   </aside>
 
   <main class="main">
-
-    <!-- ── DASHBOARD ───────────────────────────────────────────── -->
+    <!-- DASHBOARD -->
     <div id="page-dashboard" class="page active">
-      <div class="ph">
-        <div class="ph-l"><h2>Ամփոփում</h2><p>Ձեր խանութի ընդհանուր վիճակը</p></div>
-        <div class="ph-r"><button class="btn btn-ghost" onclick="loadData()">🔄 Թարմացնել</button></div>
-      </div>
+      <div class="ph"><h2>Ամփոփում</h2></div>
       <div class="stats-5">
-        <div class="stat"><div class="stat-glow" style="background:var(--accent)"></div>
-          <div class="stat-label">Տեսականի</div><div class="stat-val cv" id="st-cnt">—</div><div class="stat-sub" id="st-cnt-s"> </div></div>
-        <div class="stat"><div class="stat-glow" style="background:var(--orange)"></div>
-          <div class="stat-label">Ներդրված</div><div class="stat-val co" id="st-inv">—</div><div class="stat-sub">ինքնարժեք × քանակ</div></div>
-        <div class="stat"><div class="stat-glow" style="background:var(--green)"></div>
-          <div class="stat-label">Ակնկալվող Եկամուտ</div><div class="stat-val cg" id="st-exp">—</div><div class="stat-sub" id="st-exp-s"> </div></div>
-        <div class="stat"><div class="stat-glow" style="background:var(--teal)"></div>
-          <div class="stat-label">Ամսական Վաճառք</div><div class="stat-val ct" id="st-mon">—</div><div class="stat-sub" id="st-mon-s"> </div></div>
-        <div class="stat"><div class="stat-glow" style="background:var(--transit)"></div>
-          <div class="stat-label">Ճանապարհին</div><div class="stat-val cy" id="st-tr">—</div><div class="stat-sub" id="st-tr-s"> </div></div>
+        <div class="stat"><div class="stat-label">Տեսականի</div><div class="stat-val" id="st-cnt">—</div></div>
+        <div class="stat"><div class="stat-label">Ներդրված Գումար</div><div class="stat-val" style="color:var(--orange)" id="st-inv">—</div></div>
+        <div class="stat"><div class="stat-label">Ակնկալվող Եկամուտ</div><div class="stat-val" style="color:var(--green)" id="st-exp">—</div></div>
+        <div class="stat"><div class="stat-label">Ամսական Վաճառք</div><div class="stat-val" style="color:var(--teal)" id="st-mon">—</div></div>
+        <div class="stat"><div class="stat-label">Ճանապարհին</div><div class="stat-val" style="color:var(--transit)" id="st-tr">—</div></div>
       </div>
+      
       <div class="card">
-        <div class="card-h"><div class="card-title"><span class="ctag ctag-p">📦</span>Ապրանքների Ցուցակ</div></div>
+        <div class="ph"><h3>Առկա Ապրանքներ</h3></div>
         <div class="tw"><table>
-          <thead><tr><th>SKU</th><th>Ապրանք</th><th>Պահեստում</th><th>Վաճառքի Գին</th><th>Ակնկալվող Եկամուտ</th><th>Կարգավիճակ</th></tr></thead>
+          <thead><tr><th>SKU</th><th>Անվանում</th><th>Քանակ</th><th>Վաճառքի Գին</th><th>Ընդամենը</th></tr></thead>
           <tbody id="dash-tb"></tbody>
-        </table></div>
-      </div>
-      <div class="card" id="dash-transit-card">
-        <div class="card-h"><div class="card-title"><span class="ctag ctag-y">🚚</span>Ճանապարհին (վերջին)</div>
-          <button class="btn btn-y" onclick="go('transit',null)" style="font-size:12px;padding:7px 14px">Բոլորը →</button>
-        </div>
-        <div class="tw"><table>
-          <thead><tr><th>Ապրանք</th><th>Քանակ</th><th>Ձեռքբերման Գին</th><th>Տեղափոխման Գին</th><th>Ընդամենը</th><th>Գնորդի Անուն</th></tr></thead>
-          <tbody id="dash-tr-tb"></tbody>
         </table></div>
       </div>
     </div>
 
-    <!-- ── PRODUCTS ────────────────────────────────────────────── -->
+    <!-- PRODUCTS -->
     <div id="page-products" class="page">
-      <div class="ph">
-        <div class="ph-l"><h2>Ապրանքներ</h2><p>Ամբողջ ցուցակ · կտտեք բջջի վրա՝ խմբագրելու համար</p></div>
-      </div>
+      <div class="ph"><h2>Բոլոր Ապրանքները</h2></div>
       <div class="card">
         <div class="tw"><table>
-          <thead><tr><th>#</th><th>SKU</th><th>Ապրանք</th><th>Քանակ</th><th>Ձեռքբերման Գին</th><th>Ներդրված Գումար</th><th>Վաճառքի Գին</th><th>Ակնկալվող Եկամուտ</th><th>Ավելացված է</th><th>Գործողություն</th></tr></thead>
+          <thead><tr><th>SKU</th><th>Անվանում</th><th>Քանակ</th><th>Ձեռքբերման Գին</th><th>Վաճառքի Գին</th><th>Գործողություն</th></tr></thead>
           <tbody id="prod-tb"></tbody>
         </table></div>
       </div>
     </div>
 
-    <!-- ── ADD PRODUCT ─────────────────────────────────────────── -->
-    <div id="page-add" class="page">
-      <div class="ph"><div class="ph-l"><h2>Ավելացնել Ապրանք</h2><p>SKU-ն կստեղծվի ավտոմատ</p></div></div>
-      <div class="card" style="max-width:640px">
-        <div class="card-h"><div class="card-title"><span class="ctag ctag-p">📦</span>Ապրանքի Տվյալներ</div></div>
-        <div class="form-grid">
-          <div class="field"><label>Անվանումը</label><input id="p-name" type="text" placeholder="Ապրանքի անուն"/></div>
-          <div class="field"><label>Քանակ</label><input id="p-qty" type="number" min="0" placeholder="0"/></div>
-          <div class="field"><label>Ձեռքբերման Գին (֏)</label><input id="p-buy" type="number" min="0" placeholder="0"/></div>
-          <div class="field"><label>Վաճառքի Գին (֏)</label><input id="p-sell" type="number" min="0" placeholder="0"/></div>
-        </div>
-        <div class="infobox">🏷️ SKU-ն կստեղծվի ավտոմատ (օրինակ՝ <span style="font-family:'JetBrains Mono',monospace">APR-K7MN2X</span>)</div>
-        <button class="btn btn-p" id="add-btn" onclick="addProduct()">➕ Ավելացնել Ապրանք</button>
-      </div>
-    </div>
-
-    <!-- ── BULK IMPORT ─────────────────────────────────────────── -->
-    <div id="page-import" class="page">
-      <div class="ph">
-        <div class="ph-l"><h2>Զանգվածային Ներմուծում</h2><p>CSV ֆայլի միջոցով</p></div>
-        <div class="ph-r"><button class="btn btn-teal" onclick="downloadTemplate()">📄 Ներբեռնել Ձևանմուշը</button></div>
-      </div>
-      <div class="card">
-        <div class="card-h"><div class="card-title"><span class="ctag ctag-o">📥</span>CSV Ֆայլի Տեղադրում</div></div>
-        <div class="warnbox">⚠️ CSV ֆայլը պետք է ունենա 4 սյունակ՝ <b>name, quantity, purchasePrice, salePrice</b>: Առաջին տողը վերնագիրն է:</div>
-        <div class="drop-area" id="drop-area" onclick="document.getElementById('file-input').click()"
-             ondragover="ev(event)" ondrop="drop(event)">
-          <div class="drop-icon">📂</div>
-          <p>Քաշեք CSV ֆայլը այստեղ <strong>կամ</strong> սեղմեք ընտրելու համար</p>
-          <p style="font-size:12px;margin-top:6px;color:var(--muted)">Ձևաչափը՝ .csv · առավելագույնը 500 ապրանք</p>
-        </div>
-        <input type="file" id="file-input" accept=".csv" onchange="handleFile(event)"/>
-        <div id="import-preview" style="display:none">
-          <div class="successbox" id="import-count"></div>
-          <div class="preview-wrap">
-            <table>
-              <thead><tr><th>#</th><th>Անուն</th><th>Քանակ</th><th>Ձեռքբերման Գին</th><th>Վաճառքի Գին</th></tr></thead>
-              <tbody id="import-tb"></tbody>
-            </table>
-          </div>
-          <div style="display:flex;gap:10px;margin-top:4px">
-            <button class="btn btn-p" id="import-btn" onclick="importProducts()">✅ Հաստատել Ներմուծումը</button>
-            <button class="btn btn-ghost" onclick="clearImport()">✖ Չեղարկել</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── SELL ────────────────────────────────────────────────── -->
-    <div id="page-sell" class="page">
-      <div class="ph"><div class="ph-l"><h2>Գրանցել Վաճառք</h2><p>Ապրանքի դուրսգրում պահեստից</p></div></div>
-      <div class="card" style="max-width:580px">
-        <div class="card-h"><div class="card-title"><span class="ctag ctag-g">💰</span>Վաճառքի Տվյալներ</div></div>
-        <div class="form-grid">
-          <div class="field" style="grid-column:1/-1">
-            <label>Ապրանք</label>
-            <select id="s-prod"><option value="">— Ընտրել —</option></select>
-          </div>
-          <div class="field"><label>Քանակ</label><input id="s-qty" type="number" min="1" value="1"/></div>
-          <div class="field"><label>Վաճառքի Գին (֏)</label><input id="s-price" type="number" min="0" placeholder="0"/></div>
-        </div>
-        <div id="s-info" style="display:none"></div>
-        <button class="btn btn-g" id="sell-btn" onclick="recordSale()">✅ Հաստատել Վաճառք</button>
-      </div>
-    </div>
-
-    <!-- ── TRANSIT LIST ────────────────────────────────────────── -->
+    <!-- TRANSIT -->
     <div id="page-transit" class="page">
-      <div class="ph">
-        <div class="ph-l"><h2>Ճանապարհին</h2><p>Տրանզիտ ապրանքների ցուցակ</p></div>
-        <div class="ph-r">
-          <button class="btn btn-y" onclick="go('add-transit',null)">➕ Ավելացնել Տրանզիտ</button>
-        </div>
-      </div>
-      <div class="stats" style="grid-template-columns:repeat(3,1fr);margin-bottom:22px">
-        <div class="stat"><div class="stat-glow" style="background:var(--transit)"></div>
-          <div class="stat-label">Տրանզիտ Ապրանք</div><div class="stat-val cy" id="tr-cnt">—</div><div class="stat-sub">տեսականի</div></div>
-        <div class="stat"><div class="stat-glow" style="background:var(--orange)"></div>
-          <div class="stat-label">Ներդրված Տրանզիտ</div><div class="stat-val co" id="tr-inv">—</div><div class="stat-sub">ինքնարժեք + ծախս</div></div>
-        <div class="stat"><div class="stat-glow" style="background:var(--teal)"></div>
-          <div class="stat-label">Ընդամենը Քանակ</div><div class="stat-val ct" id="tr-qty">—</div><div class="stat-sub">միավոր</div></div>
-      </div>
+      <div class="ph"><h2>Ապրանքներ Ճանապարհին</h2></div>
       <div class="card">
         <div class="tw"><table>
-          <thead><tr><th>ID</th><th>Ապրանք</th><th>Քանակ</th><th>Ձեռքբերման Գին</th><th>Տեղափոխման Գին</th><th>Ընդամենը</th><th>Գնորդ</th><th>Ավելացված է</th><th></th><th></th></tr></thead>
+          <thead><tr><th>ID</th><th>Ապրանք</th><th>Քանակ</th><th>Ձեռքբերման Գին</th><th>Տեղափոխման Գին</th><th>Ընդամենը</th><th>Գնորդ</th></tr></thead>
           <tbody id="transit-tb"></tbody>
         </table></div>
       </div>
     </div>
-
-    <!-- ── ADD TRANSIT ─────────────────────────────────────────── -->
-    <div id="page-add-transit" class="page">
-      <div class="ph"><div class="ph-l"><h2>Ավելացնել Տրանզիտ</h2><p>Ճանապարհին գտնվող ապրանք</p></div></div>
-      <div class="card" style="max-width:640px">
-        <div class="card-h"><div class="card-title"><span class="ctag ctag-y">🚚</span>Տրանզիտի Տվյալներ</div></div>
-        <div class="transitbox">📦 Ավելացրեք այն ապրանքները, որոնք դեռ ճանապարհին են: Պահեստ հասնելուն պես սեղմեք «Տեղափոխել Պահեստ»:</div>
-        <div class="form-grid">
-          <div class="field" style="grid-column:1/-1"><label>Անվանումը</label><input id="tr-name" type="text" placeholder="Ապրանքի անուն"/></div>
-          <div class="field"><label>Քանակ</label><input id="tr-qty" type="number" min="1" placeholder="1"/></div>
-          <div class="field"><label>Ձեռքբերման Գին (֏)</label><input id="tr-buy" type="number" min="0" placeholder="0"/></div>
-          <div class="field"><label>Տեղափոխման Ծախս (֏)</label><input id="tr-ship" type="number" min="0" placeholder="0" value="0"/></div>
-          <div class="field"><label>Գնորդի Անուն</label><input id="tr-buyer" type="text" placeholder="Ով է գնել (ըստ ցանկության)"/></div>
-        </div>
-        <button class="btn btn-y" id="add-tr-btn" onclick="addTransit()">🚚 Ավելացնել Տրանզիտ</button>
-      </div>
-    </div>
-
-    <!-- ── SALES HISTORY ──────────────────────────────────────── -->
-    <div id="page-history" class="page">
-      <div class="ph"><div class="ph-l"><h2>Վաճառքի Պատմություն</h2><p>Բոլոր գրանցված վաճառքները</p></div></div>
-      <div class="filters">
-        <select id="f-m" onchange="renderHistory()"><option value="">Բոլոր Ամիսները</option></select>
-        <select id="f-y" onchange="renderHistory()"><option value="">Բոլոր Տարիները</option></select>
-      </div>
-      <div class="sumbar" id="sumbar" style="display:none">
-        <div class="sumb"><span class="sumb-ico">🧾</span><div><div class="sumb-label">Վաճառքներ</div><div class="sumb-val cv" id="sm-c">0</div></div></div>
-        <div class="sumb"><span class="sumb-ico">💰</span><div><div class="sumb-label">Ընդամենը Եկամուտ</div><div class="sumb-val cg" id="sm-i">0</div></div></div>
-        <div class="sumb"><span class="sumb-ico">🏆</span><div><div class="sumb-label">Թոփ Ապրանք</div><div class="sumb-val co" id="sm-t">—</div></div></div>
-      </div>
-      <div class="card">
-        <div class="tw"><table>
-          <thead><tr><th>Ամսաթիվ</th><th>SKU</th><th>Ապրանք</th><th>Քանակ</th><th>Գին/հատ</th><th>Ընդամենը</th><th></th></tr></thead>
-          <tbody id="hist-tb"></tbody>
-        </table></div>
-      </div>
-    </div>
-
-    <!-- ── SELL-THROUGH TRACKER ───────────────────────────────── -->
-    <div id="page-tracker" class="page">
-      <div class="ph"><div class="ph-l"><h2>Վաճառքի Տեմպ</h2><p>Ապրանքների շարժի վերլուծություն</p></div></div>
-      <div class="card">
-        <div class="tw"><table>
-          <thead><tr><th>SKU</th><th>Ապրանք</th><th>Ավելացված է</th><th>Վաճառված Քանակ</th><th>Օրեր Ցուցակում</th><th>Առկա Պաշար</th><th>Միջին Վաճառքի Ժամկետ</th></tr></thead>
-          <tbody id="track-tb"></tbody>
-        </table></div>
-      </div>
-    </div>
-
   </main>
 </div>
-<div id="toast"></div>
 
 <script>
 const SKEY = 'shop_v5_url';
 let URL_BASE = '';
 let S = { products:[], sales:[], transit:[] };
-let importData = [];
-
-const MONTHS_SHORT = ['Հնվ.','Փտր.','Մարտ','Ապր.','Մայ.','Հն.','Հլ.','Օգ.','Սեպ.','Հոկ.','Նոյ.','Դեկ.'];
-const MONTHS_FULL  = ['Հունվար','Փետրվար','Մարտ','Ապրիլ','Մայիս','Հունիս','Հուլիս','Օգոստոս','Սեպտեմբեր','Հոկտեմբեր','Նոյեմբեր','Դեկտեմբեր'];
 
 function init() {
   const s = localStorage.getItem(SKEY);
@@ -516,33 +149,10 @@ function init() {
 
 async function saveConfig() {
   const url = document.getElementById('cfg-url').value.trim();
-  const err = document.getElementById('sf-err');
-  err.style.display = 'none';
-  if (!url.includes('script.google.com')) {
-    err.textContent = 'Սխալ URL — պետք է լինի script.google.com տիրույթից:';
-    err.style.display = 'block'; return;
-  }
+  if (!url) return;
   URL_BASE = url;
-  showOv('Ստուգվում է կապը...');
-  try {
-    const r = await get('getData');
-    if (r.error) throw new Error(r.error);
-    localStorage.setItem(SKEY, url);
-    S = { products: r.products||[], sales: r.sales||[], transit: r.transit||[] };
-    document.getElementById('setup').style.display = 'none';
-    document.getElementById('app').style.display = 'flex';
-    render(); hideOv();
-  } catch(e) {
-    hideOv(); URL_BASE = '';
-    err.textContent = 'Կապը չհաջողվեց: ' + e.message;
-    err.style.display = 'block';
-  }
-}
-
-function openSettings() {
-  document.getElementById('cfg-url').value = URL_BASE;
-  document.getElementById('sf-err').style.display = 'none';
-  document.getElementById('setup').style.display = 'flex';
+  localStorage.setItem(SKEY, url);
+  launch();
 }
 
 function launch() {
@@ -551,488 +161,64 @@ function launch() {
   loadData();
 }
 
-async function get(action) {
-  const r = await fetch(`${URL_BASE}?action=${action}`);
-  if (!r.ok) throw new Error('HTTP '+r.status);
-  return r.json();
-}
-async function post(body) {
-  const r = await fetch(URL_BASE, { method:'POST', body:JSON.stringify(body), headers:{'Content-Type':'text/plain'} });
-  const t = await r.text();
-  try { return JSON.parse(t); } catch { return { ok:true }; }
-}
-
 async function loadData() {
-  showOv('Բեռնվում է...');
+  document.getElementById('ov').classList.add('show');
   try {
-    const r = await get('getData');
-    if (r.error) throw new Error(r.error);
+    const r = await fetch(`${URL_BASE}?action=getData`).then(res => res.json());
     S = { products: r.products||[], sales: r.sales||[], transit: r.transit||[] };
     render();
-  } catch(e) { toast('Սխալ: '+e.message,'error'); }
-  hideOv();
-}
-
-async function addProduct() {
-  const name = document.getElementById('p-name').value.trim();
-  const qty  = document.getElementById('p-qty').value;
-  const buy  = document.getElementById('p-buy').value;
-  const sell = document.getElementById('p-sell').value;
-  if (!name||!qty||!buy||!sell) return toast('Լրացրեք բոլոր դաշտերը','error');
-  const btn = document.getElementById('add-btn');
-  btn.disabled=true; btn.innerHTML='<span class="spin"></span> Պահպանվում է...';
-  try {
-    const r = await post({action:'addProduct',name,quantity:+qty,purchasePrice:+buy,salePrice:+sell});
-    if (r.error) throw new Error(r.error);
-    toast(`✅ Ավելացվեց! SKU: ${r.sku}`,'success');
-    ['p-name','p-qty','p-buy','p-sell'].forEach(id=>document.getElementById(id).value='');
-    await loadData();
-  } catch(e) { toast('Սխալ: '+e.message,'error'); }
-  btn.disabled=false; btn.innerHTML='➕ Ավելացնել Ապրանք';
-}
-
-async function deleteProduct(sku) {
-  if (!confirm('Հեռացնե՞լ ապրանքը:')) return;
-  showOv('Ջնջվում է...');
-  try {
-    const r = await post({action:'deleteProduct',sku});
-    if (r.error) throw new Error(r.error);
-    toast('🗑 Ջնջվեց','success'); await loadData();
-  } catch(e) { toast('Սխալ: '+e.message,'error'); hideOv(); }
-}
-
-async function updateField(sku, field, value) {
-  showOv('Թարմացվում է...');
-  try {
-    const r = await post({action:'updateProduct',sku,field,value});
-    if (r.error) throw new Error(r.error);
-    toast('✅ Պահպանվեց','success'); await loadData();
-  } catch(e) { toast('Սխալ: '+e.message,'error'); hideOv(); }
-}
-
-async function recordSale() {
-  const sku   = document.getElementById('s-prod').value;
-  const qty   = +document.getElementById('s-qty').value;
-  const price = +document.getElementById('s-price').value;
-  if (!sku||!qty||!price) return toast('Լրացրեք բոլոր դաշտերը','error');
-  const p = S.products.find(x=>x.sku===sku);
-  if (!p) return toast('Ապրանքը չգտնվեց','error');
-  if (p.quantity < qty) return toast('Բավարար քանակ չկա','error');
-  const btn = document.getElementById('sell-btn');
-  btn.disabled=true; btn.innerHTML='<span class="spin"></span>';
-  try {
-    const r = await post({action:'addSale',sku,productName:p.name,quantity:qty,salePrice:price});
-    if (r.error) throw new Error(r.error);
-    toast('✅ Վաճառքը գրանցվեց!','success');
-    document.getElementById('s-prod').value='';
-    document.getElementById('s-qty').value='1';
-    document.getElementById('s-price').value='';
-    document.getElementById('s-info').style.display='none';
-    await loadData(); fillSellDrop();
-  } catch(e) { toast('Սխալ: '+e.message,'error'); }
-  btn.disabled=false; btn.innerHTML='✅ Հաստատել Վաճառք';
-}
-
-async function deleteSale(id) {
-  if (!confirm('Ջնջե՞լ վաճառքի գրառումը (քանակը կվերադարձվի):')) return;
-  showOv('Ջնջվում է...');
-  try {
-    const r = await post({action:'deleteSale',id});
-    if (r.error) throw new Error(r.error);
-    toast('🗑 Ջնջվեց','success'); await loadData();
-  } catch(e) { toast('Սխալ: '+e.message,'error'); hideOv(); }
-}
-
-async function addTransit() {
-  const name  = document.getElementById('tr-name').value.trim();
-  const qty   = document.getElementById('tr-qty').value;
-  const buy   = document.getElementById('tr-buy').value;
-  const ship  = document.getElementById('tr-ship').value || '0';
-  const buyer = document.getElementById('tr-buyer').value.trim();
-  if (!name||!qty||!buy) return toast('Անունը, քանակը և գինը պարտադիր են','error');
-  const btn = document.getElementById('add-tr-btn');
-  btn.disabled=true; btn.innerHTML='<span class="spin"></span> Ավելացվում է...';
-  try {
-    const r = await post({action:'addTransit',name,quantity:+qty,purchasePrice:+buy,shippingPrice:+ship,buyer});
-    if (r.error) throw new Error(r.error);
-    toast(`✅ Տրանզիտը ավելացվեց! ID: ${r.id}`,'success');
-    ['tr-name','tr-qty','tr-buy','tr-buyer'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('tr-ship').value='0';
-    await loadData();
-  } catch(e) { toast('Սխալ: '+e.message,'error'); }
-  btn.disabled=false; btn.innerHTML='🚚 Ավելացնել Տրանզիտ';
-}
-
-async function deleteTransit(id) {
-  if (!confirm('Ջնջե՞լ տրանզիտի գրառումը:')) return;
-  showOv('Ջնջվում է...');
-  try {
-    const r = await post({action:'deleteTransit',id});
-    if (r.error) throw new Error(r.error);
-    toast('🗑 Ջնջվեց','success'); await loadData();
-  } catch(e) { toast('Սխալ: '+e.message,'error'); hideOv(); }
-}
-
-function openTransitModal(id) {
-  const item = S.transit.find(t=>t.id===id);
-  if (!item) return;
-  document.getElementById('mt-id').value = id;
-  document.getElementById('mt-qty').value = item.quantity;
-  document.getElementById('mt-price').value = '';
-  document.getElementById('mt-info').innerHTML =
-    `🚚 <b>${item.name}</b><br>Քանակ: <b>${item.quantity}</b> · Գին: <b>${fmt(item.purchasePrice)}</b> · Ծախս: <b>${fmt(item.shippingPrice)}</b>`;
-  document.getElementById('modal-transit').style.display = 'flex';
-}
-
-function closeModal() {
-  document.getElementById('modal-transit').style.display = 'none';
-}
-
-async function confirmTransitToStock() {
-  const id    = document.getElementById('mt-id').value;
-  const qty   = +document.getElementById('mt-qty').value;
-  const price = +document.getElementById('mt-price').value;
-  if (!qty) return toast('Քանակը պարտադիր է','error');
-  const btn = document.getElementById('mt-btn');
-  btn.disabled=true; btn.innerHTML='<span class="spin"></span> Տեղափոխվում է...';
-  try {
-    const r = await post({action:'transitToStock',id,quantity:qty,salePrice:price});
-    if (r.error) throw new Error(r.error);
-    toast('✅ Պահեստը թարմացվեց!','success');
-    closeModal(); await loadData();
-  } catch(e) { toast('Սխալ: '+e.message,'error'); }
-  btn.disabled=false; btn.innerHTML='✅ Տեղափոխել Պահեստ';
-}
-
-function downloadTemplate() {
-  const csv = 'name,quantity,purchasePrice,salePrice\nԱպրանք 1,10,180000,220000\nԱպրանք 2,5,95000,130000\n';
-  const a = Object.assign(document.createElement('a'),{
-    href: URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'})),
-    download: 'import-template.csv'
-  });
-  a.click(); URL.revokeObjectURL(a.href);
-  toast('📄 Ձևանմուշը ներբեռնվեց','info');
-}
-
-function ev(e) { e.preventDefault(); document.getElementById('drop-area').classList.add('over'); }
-function drop(e) {
-  e.preventDefault();
-  document.getElementById('drop-area').classList.remove('over');
-  const file = e.dataTransfer.files[0];
-  if (file) parseCSV(file);
-}
-function handleFile(e) { const file = e.target.files[0]; if (file) parseCSV(file); }
-
-function parseCSV(file) {
-  const reader = new FileReader();
-  reader.onload = ev => {
-    const text = ev.target.result;
-    const lines = text.split(/\r?\n/).filter(l=>l.trim());
-    if (lines.length < 2) return toast('CSV-ն պետք է ունենա առնվազն 2 տող','error');
-    const rows = lines.slice(1);
-    const items = [], errors = [];
-    rows.forEach((line, i) => {
-      const cols = line.match(/(\".*?\"|[^,]+)(?=,|$)/g) || line.split(',');
-      const clean = cols.map(c => c.replace(/^\"|\"$/g,'').trim());
-      const [name, qty, buy, sell] = clean;
-      if (!name || isNaN(+qty) || isNaN(+buy) || isNaN(+sell)) {
-        errors.push(`Տող ${i+2}: Սխալ տվյալ`); return;
-      }
-      items.push({ name: name.trim(), quantity: +qty, purchasePrice: +buy, salePrice: +sell });
-    });
-    if (errors.length) toast(`⚠️ ${errors.length} սխալ տող`,'error');
-    if (!items.length) return;
-    importData = items;
-    document.getElementById('import-count').textContent = `✅ ${items.length} ապրանք պատրաստ է ներմուծման`;
-    document.getElementById('import-tb').innerHTML = items.map((p,i) => `
-      <tr>
-        <td style="color:var(--muted)">${i+1}</td>
-        <td><strong>${p.name}</strong></td>
-        <td><span class="badge bt">${p.quantity}</span></td>
-        <td class="co">${fmt(p.purchasePrice)}</td>
-        <td class="cg">${fmt(p.salePrice)}</td>
-      </tr>`).join('');
-    document.getElementById('import-preview').style.display = 'block';
-  };
-  reader.readAsText(file, 'UTF-8');
-}
-
-async function importProducts() {
-  if (!importData.length) return;
-  const btn = document.getElementById('import-btn');
-  btn.disabled=true; btn.innerHTML='<span class="spin"></span> Ներմուծվում է...';
-  try {
-    const r = await post({ action:'addProducts', items: importData });
-    if (r.error) throw new Error(r.error);
-    toast(`✅ ${r.count} ապրանք ներմուծվեց!`,'success');
-    clearImport(); await loadData();
-  } catch(e) { toast('Սխալ: '+e.message,'error'); }
-  btn.disabled=false; btn.innerHTML='✅ Հաստատել Ներմուծումը';
-}
-
-function clearImport() {
-  importData = [];
-  document.getElementById('import-preview').style.display = 'none';
-  document.getElementById('file-input').value = '';
-}
-
-function editCell(td, sku, field, cur) {
-  td.innerHTML=`<input class="ie" type="number" value="${cur}" min="0">`;
-  const inp=td.querySelector('input'); inp.focus(); inp.select();
-  inp.onblur=async()=>{ const v=inp.value.trim(); if(v!==''&&+v!==cur) await updateField(sku,field,v); else render(); };
-  inp.onkeydown=e=>{ if(e.key==='Enter') inp.blur(); if(e.key==='Escape') render(); };
+  } catch(e) { alert('Սխալ կապի ժամանակ'); }
+  document.getElementById('ov').classList.remove('show');
 }
 
 const fmt = n => Number(n).toLocaleString('hy-AM') + ' ֏';
 
 function render() {
-  renderDash(); renderProducts(); renderTransit(); renderHistory(); renderTracker();
-}
+  // Stats
+  document.getElementById('st-cnt').textContent = S.products.length;
+  const inv = S.products.reduce((a,p)=>a+p.purchasePrice*p.quantity,0);
+  const exp = S.products.reduce((a,p)=>a+p.salePrice*p.quantity,0);
+  document.getElementById('st-inv').textContent = fmt(inv);
+  document.getElementById('st-exp').textContent = fmt(exp);
+  document.getElementById('st-tr').textContent = S.transit.length;
 
-function renderDash() {
-  const now = new Date();
-  const mSales = S.sales.filter(s => {
-    if (s.date && s.date.length >= 10) {
-      const m = +s.date.slice(3,5)-1, y = +s.date.slice(6,10);
-      return m === now.getMonth() && y === now.getFullYear();
-    }
-    return false;
-  });
-  const inv    = S.products.reduce((a,p)=>a+p.purchasePrice*p.quantity,0);
-  const exp    = S.products.reduce((a,p)=>a+p.salePrice*p.quantity,0);
-  const mInc   = mSales.reduce((a,s)=>a+s.total,0);
-  const low    = S.products.filter(p=>p.quantity<=2).length;
-  const trInv  = S.transit.reduce((a,t)=>a+t.total,0);
-  const trQty  = S.transit.reduce((a,t)=>a+t.quantity,0);
-
-  document.getElementById('st-cnt').textContent   = S.products.length;
-  document.getElementById('st-cnt-s').textContent = low?`⚠️ ${low} քիչ քանակ`:'✓ ամեն ինչ կարգին է';
-  document.getElementById('st-inv').textContent   = fmt(inv);
-  document.getElementById('st-exp').textContent   = fmt(exp);
-  document.getElementById('st-exp-s').textContent = inv>0?`+${fmt(exp-inv)} շահույթ`:'';
-  document.getElementById('st-mon').textContent   = fmt(mInc);
-  document.getElementById('st-mon-s').textContent = `${mSales.length} վաճառք ${MONTHS_SHORT[now.getMonth()]}`;
-  document.getElementById('st-tr').textContent    = S.transit.length;
-  document.getElementById('st-tr-s').textContent  = `${trQty} հատ · ${fmt(trInv)}`;
-
-  const tb = document.getElementById('dash-tb');
-  if (!S.products.length) {
-    tb.innerHTML='<tr><td colspan="6" class="empty"><span class="ei">📦</span>Ներկայումս ապրանքներ չկան</td></tr>';
-  } else {
-    tb.innerHTML = S.products.map(p=>`<tr>
-      <td><span class="sku">${p.sku}</span></td>
-      <td><strong>${p.name}</strong></td>
-      <td><span class="badge ${p.quantity>2?'bg':'br'}">${p.quantity}</span></td>
-      <td class="co">${fmt(p.salePrice)}</td>
-      <td class="cg">${fmt(p.salePrice*p.quantity)}</td>
-      <td><span class="badge ${p.quantity>2?'bt':'bo'}">${p.quantity>2?'Առկա':'Քիչ է մնացել'}</span></td>
-    </tr>`).join('');
-  }
-
-  const trTb = document.getElementById('dash-tr-tb');
-  if (!S.transit.length) {
-    trTb.innerHTML='<tr><td colspan="6" class="empty"><span class="ei">🚚</span>Ճանապարհին ապրանք չկա</td></tr>';
-  } else {
-    trTb.innerHTML = S.transit.slice(0,5).map(t=>`<tr>
-      <td><strong>${t.name}</strong></td>
-      <td><span class="badge by">${t.quantity}</span></td>
-      <td class="co">${fmt(t.purchasePrice)}</td>
-      <td class="cy">${fmt(t.shippingPrice)}</td>
-      <td class="cg">${fmt(t.total)}</td>
-      <td style="color:var(--muted);font-size:12px">${t.buyer||'—'}</td>
-    </tr>`).join('');
-  }
-}
-
-function renderProducts() {
-  const tb = document.getElementById('prod-tb');
-  if (!S.products.length) {
-    tb.innerHTML='<tr><td colspan="10" class="empty"><span class="ei">📦</span>Ապրանքներ չկան</td></tr>'; return;
-  }
-  tb.innerHTML = S.products.map((p,i)=>`<tr>
-    <td class="cv" style="font-size:12px">${i+1}</td>
+  // Dash Table
+  document.getElementById('dash-tb').innerHTML = S.products.map(p=>`<tr>
     <td><span class="sku">${p.sku}</span></td>
     <td><strong>${p.name}</strong></td>
-    <td class="edit-cell" onclick="editCell(this,'${p.sku}','quantity',${p.quantity})" title="Կտտացրեք փոխելու համար">
-      <span class="ev"><span class="badge ${p.quantity>2?'bg':'br'}">${p.quantity}</span></span></td>
-    <td class="edit-cell co" onclick="editCell(this,'${p.sku}','purchasePrice',${p.purchasePrice})" title="Կտտացրեք փոխելու համար">
-      <span class="ev">${fmt(p.purchasePrice)}</span></td>
-    <td style="color:var(--muted);font-size:12px">${fmt(p.purchasePrice*p.quantity)}</td>
-    <td class="edit-cell co" onclick="editCell(this,'${p.sku}','salePrice',${p.salePrice})" title="Կտտացրեք փոխելու համար">
-      <span class="ev">${fmt(p.salePrice)}</span></td>
-    <td class="cg">${fmt(p.salePrice*p.quantity)}</td>
-    <td style="font-size:11px;color:var(--muted)">${p.addedAt}</td>
-    <td><button class="btn btn-r" onclick="deleteProduct('${p.sku}')">🗑</button></td>
+    <td><span class="badge ${p.quantity>2?'bg':'br'}">${p.quantity}</span></td>
+    <td>${fmt(p.salePrice)}</td>
+    <td>${fmt(p.salePrice*p.quantity)}</td>
   </tr>`).join('');
-}
 
-function renderTransit() {
-  const trInv = S.transit.reduce((a,t)=>a+t.total,0);
-  const trQty = S.transit.reduce((a,t)=>a+t.quantity,0);
-  const cntEl = document.getElementById('tr-cnt');
-  const invEl = document.getElementById('tr-inv');
-  const qtyEl = document.getElementById('tr-qty');
-  if (cntEl) cntEl.textContent = S.transit.length;
-  if (invEl) invEl.textContent = fmt(trInv);
-  if (qtyEl) qtyEl.textContent = trQty + ' հ.';
+  // Products Table
+  document.getElementById('prod-tb').innerHTML = S.products.map(p=>`<tr>
+    <td><span class="sku">${p.sku}</span></td>
+    <td>${p.name}</td>
+    <td>${p.quantity}</td>
+    <td>${fmt(p.purchasePrice)}</td>
+    <td>${fmt(p.salePrice)}</td>
+    <td><button class="btn btn-r">🗑</button></td>
+  </tr>`).join('');
 
-  const tb = document.getElementById('transit-tb');
-  if (!tb) return;
-  if (!S.transit.length) {
-    tb.innerHTML='<tr><td colspan="10" class="empty"><span class="ei">🚚</span>Ճանապարհին ապրանք չկա</td></tr>'; return;
-  }
-  tb.innerHTML = S.transit.map(t=>`<tr>
-    <td><span class="tid">${t.id}</span></td>
+  // Transit Table
+  document.getElementById('transit-tb').innerHTML = S.transit.map(t=>`<tr>
+    <td>${t.id}</td>
     <td><strong>${t.name}</strong></td>
-    <td><span class="badge by">${t.quantity}</span></td>
-    <td class="co">${fmt(t.purchasePrice)}</td>
-    <td class="cy">${fmt(t.shippingPrice)}</td>
-    <td class="cg">${fmt(t.total)}</td>
-    <td style="font-size:12px;color:var(--muted2)">${t.buyer||'—'}</td>
-    <td style="font-size:11px;color:var(--muted)">${t.addedAt}</td>
-    <td><button class="btn btn-y-sm" onclick="openTransitModal('${t.id}')">📦 Պահեստ</button></td>
-    <td><button class="btn btn-r" onclick="deleteTransit('${t.id}')">🗑</button></td>
+    <td>${t.quantity}</td>
+    <td>${fmt(t.purchasePrice)}</td>
+    <td>${fmt(t.shippingPrice)}</td>
+    <td style="color:var(--green)">${fmt(t.total)}</td>
+    <td>${t.buyer || '—'}</td>
   </tr>`).join('');
-}
-
-function fillSellDrop() {
-  const sel = document.getElementById('s-prod');
-  sel.innerHTML = '<option value="">— Ընտրել ապրանքը —</option>' +
-    S.products.filter(p=>p.quantity>0).map(p=>
-      `<option value="${p.sku}" data-price="${p.salePrice}" data-qty="${p.quantity}" data-name="${p.name}">
-        ${p.name} · ${p.sku} · ${p.quantity} հատ</option>`
-    ).join('');
-  sel.onchange = () => {
-    const o = sel.options[sel.selectedIndex];
-    const info = document.getElementById('s-info');
-    if (o.value) {
-      document.getElementById('s-price').value = o.dataset.price;
-      info.className = 'infobox';
-      info.style.display = 'block';
-      info.innerHTML = `🏷️ <b>${o.dataset.name}</b> &nbsp;·&nbsp; SKU: <span style="font-family:'JetBrains Mono',monospace">${o.value}</span><br>📦 Պահեստում: <b>${o.dataset.qty} հատ</b> &nbsp;·&nbsp; Գին: <b>${fmt(+o.dataset.price)}</b>`;
-    } else { info.style.display = 'none'; }
-  };
-}
-
-function fillFilters() {
-  const years = [...new Set(S.sales.map(s=>s.date&&s.date.slice(6,10)).filter(Boolean))].sort((a,b)=>b-a);
-  const ySel = document.getElementById('f-y'), cy = ySel.value;
-  ySel.innerHTML = '<option value="">Բոլոր Տարիները</option>' +
-    years.map(y=>`<option value="${y}"${y===cy?' selected':''}>${y}</option>`).join('');
-  const mSel = document.getElementById('f-m'), cm = mSel.value;
-  mSel.innerHTML = '<option value="">Բոլոր Ամիսները</option>' +
-    MONTHS_FULL.map((m,i)=>{const v=String(i+1).padStart(2,'0');return `<option value="${v}"${v===cm?' selected':''}>${m}</option>`}).join('');
-}
-
-function renderHistory() {
-  const mf = document.getElementById('f-m')?.value;
-  const yf = document.getElementById('f-y')?.value;
-  let sales = [...S.sales].sort((a,b)=>{
-    const ka = a.date&&a.date.length>=10?`${a.date.slice(6,10)}-${a.date.slice(3,5)}-${a.date.slice(0,2)}`:'';
-    const kb = b.date&&b.date.length>=10?`${b.date.slice(6,10)}-${b.date.slice(3,5)}-${b.date.slice(0,2)}`:'';
-    return kb.localeCompare(ka);
-  });
-  if (mf) sales = sales.filter(s=>s.date&&s.date.slice(3,5)===mf);
-  if (yf) sales = sales.filter(s=>s.date&&s.date.slice(6,10)===yf);
-
-  const sb = document.getElementById('sumbar');
-  if (sales.length) {
-    sb.style.display='grid';
-    const inc = sales.reduce((a,s)=>a+s.total,0);
-    const tm = {}; sales.forEach(s=>{tm[s.productName]=(tm[s.productName]||0)+s.quantity});
-    const top = Object.entries(tm).sort((a,b)=>b[1]-a[1])[0];
-    document.getElementById('sm-c').textContent = sales.length;
-    document.getElementById('sm-i').textContent = fmt(inc);
-    document.getElementById('sm-t').textContent = top?top[0]:'—';
-  } else { sb.style.display='none'; }
-
-  const tb = document.getElementById('hist-tb');
-  if (!sales.length) {
-    tb.innerHTML='<tr><td colspan="7" class="empty"><span class="ei">🗓️</span>Վաճառքներ չկան</td></tr>'; return;
-  }
-  tb.innerHTML = sales.map(s=>`<tr>
-    <td style="color:var(--muted);font-size:12px">${s.date}</td>
-    <td><span class="sku">${s.sku}</span></td>
-    <td><strong>${s.productName}</strong></td>
-    <td><span class="badge bp">${s.quantity}</span></td>
-    <td class="co">${fmt(s.salePrice)}</td>
-    <td class="cg">${fmt(s.total)}</td>
-    <td><button class="btn btn-r" onclick="deleteSale('${s.id}')">🗑</button></td>
-  </tr>`).join('');
-}
-
-function renderTracker() {
-  const tb = document.getElementById('track-tb');
-  if (!S.products.length) {
-    tb.innerHTML='<tr><td colspan="7" class="empty"><span class="ei">⏱️</span>Տվյալներ չկան</td></tr>'; return;
-  }
-  tb.innerHTML = S.products.map(p => {
-    const pSales  = S.sales.filter(s => s.sku === p.sku);
-    const soldQty = pSales.reduce((a,s) => a+s.quantity, 0);
-    let daysSinceAdded = '—', daysPerUnit = '—';
-    if (p.addedAt && p.addedAt.length >= 10) {
-      const [dd,mm,yyyy] = p.addedAt.slice(0,10).split('-').map(Number);
-      const diff = Math.floor((new Date() - new Date(yyyy,mm-1,dd)) / 86400000);
-      daysSinceAdded = diff;
-      if (soldQty > 0) daysPerUnit = (diff / soldQty).toFixed(1) + ' օր/հատ';
-    }
-    const remaining = p.quantity;
-    let urgency='bg';
-    if (remaining===0) urgency='br';
-    else if(remaining<=2) urgency='bo';
-    return `<tr>
-      <td><span class="sku">${p.sku}</span></td>
-      <td><strong>${p.name}</strong></td>
-      <td style="font-size:12px;color:var(--muted)">${p.addedAt||'—'}</td>
-      <td><span class="badge bt">${soldQty}</span></td>
-      <td style="font-size:12px;color:var(--muted)">${daysSinceAdded==='—'?'—':daysSinceAdded+' օր'}</td>
-      <td><span class="badge ${urgency}">${remaining}</span></td>
-      <td class="${daysPerUnit==='—'?'':'co'}" style="font-size:12.5px">${daysPerUnit}</td>
-    </tr>`;
-  }).join('');
 }
 
 function go(name, btn) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
-  if (btn) btn.classList.add('active');
-  if (name==='sell')        { fillSellDrop(); render(); }
-  if (name==='history')     { fillFilters(); renderHistory(); }
-  if (name==='transit')     renderTransit();
-  if (name==='dashboard'||name==='products'||name==='tracker') render();
+  btn.classList.add('active');
 }
-
-function downloadCSV() {
-  const q = v => `"${String(v).replace(/"/g,'""')}"`;
-  let csv = 'Ապրանքների Ցուցակ\nSKU,Անուն,Քանակ,Ինքնարժեք,Ընդամենը Ինքնարժեք,Վաճառքի Գին,Ակնկալվող Եկամուտ,Ավելացված է\n';
-  S.products.forEach(p => {
-    csv += [p.sku,q(p.name),p.quantity,p.purchasePrice,p.purchasePrice*p.quantity,p.salePrice,p.salePrice*p.quantity,q(p.addedAt)].join(',')+'\n';
-  });
-  csv += '\nՏրանզիտի Ցուցակ\nID,Անուն,Քանակ,Ձեռքբերման Գին,Տեղափոխման Գին,Ընդամենը,Գնորդ,Ավելացված է\n';
-  S.transit.forEach(t => {
-    csv += [t.id,q(t.name),t.quantity,t.purchasePrice,t.shippingPrice,t.total,q(t.buyer),q(t.addedAt)].join(',')+'\n';
-  });
-  csv += '\nՎաճառքի Պատմություն\nID,SKU,Ապրանք,Քանակ,Վաճառքի Գին,Ընդամենը,Ամսաթիվ\n';
-  S.sales.forEach(s => {
-    csv += [s.id,s.sku,q(s.productName),s.quantity,s.salePrice,s.total,q(s.date)].join(',')+'\n';
-  });
-  const a = Object.assign(document.createElement('a'),{
-    href: URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'})),
-    download: `shop-backup-${new Date().toISOString().slice(0,10)}.csv`
-  });
-  a.click(); URL.revokeObjectURL(a.href);
-  toast('📄 CSV ֆայլը ներբեռնվեց','success');
-}
-
-let _tt;
-function toast(msg,type='success') {
-  const el=document.getElementById('toast');
-  el.textContent=msg; el.className='show '+type;
-  clearTimeout(_tt); _tt=setTimeout(()=>el.className='',3800);
-}
-function showOv(msg='...') { document.getElementById('ov-txt').textContent=msg; document.getElementById('ov').classList.add('show'); }
-function hideOv() { document.getElementById('ov').classList.remove('show'); }
 
 init();
 </script>
