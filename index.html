@@ -231,6 +231,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
 </head>
 <body>
 
+<!-- SETUP -->
 <div id="setup">
   <div class="sc">
     <div class="sc-logo">🛍️</div>
@@ -250,6 +251,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
   </div>
 </div>
 
+<!-- LOADING OVERLAY -->
 <div id="ov">
   <div class="ov-box">
     <span class="spin"></span>
@@ -257,6 +259,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
   </div>
 </div>
 
+<!-- TRANSIT → STOCK MODAL -->
 <div id="modal-transit" style="display:none" class="modal-bg">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -277,6 +280,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
   </div>
 </div>
 
+<!-- APP -->
 <div class="layout" id="app" style="display:none">
   <aside class="sidebar">
     <div class="sb-top">
@@ -314,6 +318,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
 
   <main class="main">
 
+    <!-- ── DASHBOARD ───────────────────────────────────────────── -->
     <div id="page-dashboard" class="page active">
       <div class="ph">
         <div class="ph-l"><h2>Ամփոփում</h2><p>Ձեր խանութի ընդհանուր վիճակը</p></div>
@@ -349,6 +354,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
       </div>
     </div>
 
+    <!-- ── PRODUCTS ────────────────────────────────────────────── -->
     <div id="page-products" class="page">
       <div class="ph">
         <div class="ph-l"><h2>Ապրանքներ</h2><p>Ամբողջ ցուցակ · կտտացրեք բջջի վրա խմբագրելու համար</p></div>
@@ -361,6 +367,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
       </div>
     </div>
 
+    <!-- ── ADD PRODUCT ─────────────────────────────────────────── -->
     <div id="page-add" class="page">
       <div class="ph"><div class="ph-l"><h2>Ավելացնել Ապրանք</h2><p>SKU-ն ավտոմատ կստեղծվի</p></div></div>
       <div class="card" style="max-width:640px">
@@ -376,6 +383,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
       </div>
     </div>
 
+    <!-- ── BULK IMPORT ─────────────────────────────────────────── -->
     <div id="page-import" class="page">
       <div class="ph">
         <div class="ph-l"><h2>Bulk Import</h2><p>CSV ֆայլ — մի քանի ապրանք միաժամանակ</p></div>
@@ -407,6 +415,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
       </div>
     </div>
 
+    <!-- ── SELL ────────────────────────────────────────────────── -->
     <div id="page-sell" class="page">
       <div class="ph"><div class="ph-l"><h2>Գրանցել Վաճառք</h2><p>Ապրանքի վաճառք պահեստից</p></div></div>
       <div class="card" style="max-width:580px">
@@ -424,6 +433,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
       </div>
     </div>
 
+    <!-- ── TRANSIT LIST ────────────────────────────────────────── -->
     <div id="page-transit" class="page">
       <div class="ph">
         <div class="ph-l"><h2>Ճանապարհին</h2><p>Տրանզիտ ապրանքների ցուցակ</p></div>
@@ -437,7 +447,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
         <div class="stat"><div class="stat-glow" style="background:var(--orange)"></div>
           <div class="stat-label">Ներդրված Տրանզիտ</div><div class="stat-val co" id="tr-inv">—</div><div class="stat-sub">ձեռքբերման + տեղափոխման գին × քանակ</div></div>
         <div class="stat"><div class="stat-glow" style="background:var(--teal)"></div>
-          <div class="stat-label">Ընդհանուր Ապրանքների Քանակ</div><div class="stat-val ct" id="tr-qty">—</div><div class="stat-sub">ճանապարհին է</div></div>
+          <div class="stat-label">Ընդհանուր Ապրանքների Քանակ</div><div class="stat-val ct" id="tr-tot-qty">—</div><div class="stat-sub">ճանապարհին է</div></div>
       </div>
       <div class="card">
         <div class="tw"><table>
@@ -447,6 +457,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
       </div>
     </div>
 
+    <!-- ── ADD TRANSIT ─────────────────────────────────────────── -->
     <div id="page-add-transit" class="page">
       <div class="ph"><div class="ph-l"><h2>Ավելացնել Տրանզիտ</h2><p>Ճանապարհին գտնվող ապրանքների ավելացում</p></div></div>
       <div class="card" style="max-width:640px">
@@ -463,6 +474,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
       </div>
     </div>
 
+    <!-- ── SALES HISTORY ──────────────────────────────────────── -->
     <div id="page-history" class="page">
       <div class="ph"><div class="ph-l"><h2>Վաճառքի Պատմություն</h2><p>Բոլոր վաճառքները</p></div></div>
       <div class="filters">
@@ -482,6 +494,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
       </div>
     </div>
 
+    <!-- ── SELL-THROUGH TRACKER ───────────────────────────────── -->
     <div id="page-tracker" class="page">
       <div class="ph"><div class="ph-l"><h2>Sell-Through</h2><p>Ապրանքների վաճառքի դինամիկան ժամանակի ընթացքում</p></div></div>
       <div class="card">
@@ -879,7 +892,7 @@ function renderTransit() {
   const trQty = S.transit.reduce((a,t)=>a+t.quantity,0);
   const cntEl = document.getElementById('tr-cnt');
   const invEl = document.getElementById('tr-inv');
-  const qtyEl = document.getElementById('tr-qty');
+  const qtyEl = document.getElementById('tr-tot-qty'); // Updated ID
   if (cntEl) cntEl.textContent = S.transit.length;
   if (invEl) invEl.textContent = fmt(trInv);
   if (qtyEl) qtyEl.textContent = trQty + ' հատ';
