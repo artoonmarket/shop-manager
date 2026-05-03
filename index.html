@@ -288,7 +288,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
         <input id="mt-qty" type="number" min="1" placeholder="1"/>
       </div>
       <div class="field">
-        <label>Վաճ. գին (֏)</label>
+        <label>Վաճառքի գին (֏)</label>
         <input id="mt-price" type="number" min="0" placeholder="0"/>
       </div>
     </div>
@@ -371,7 +371,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
       <div class="card">
         <div class="card-h"><div class="card-title"><span class="ctag ctag-p">📦</span>Պահեստում առկա ապրանքներ</div></div>
         <div class="tw"><table>
-          <thead><tr><th>SKU</th><th>Ապրանք</th><th>Պահեստ</th><th>Վաճ. գին</th><th>Ակնկ. շրջ.</th><th>Ակնկ. շահ.</th><th>Կարգավիճակ</th></tr></thead>
+          <thead><tr><th>SKU</th><th>Ապրանք</th><th>Պահեստ</th><th>Վաճառքի գին</th><th>Ակնկ. շրջանառություն</th><th>Ակնկ. շահույթ</th><th>Կարգավիճակ</th></tr></thead>
           <tbody id="dash-tb"></tbody>
         </table></div>
       </div>
@@ -380,7 +380,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
           <button class="btn btn-y" onclick="go('transit',null)" style="font-size:12px;padding:7px 14px">Բոլորը →</button>
         </div>
         <div class="tw"><table>
-          <thead><tr><th>Ապրանք</th><th>Քանակ</th><th>Ձեռքբ. գին</th><th>Տեղափոխման Գին</th><th>Ընդհանուր</th><th>Ձեռքբ. անուն</th></tr></thead>
+          <thead><tr><th>Ապրանք</th><th>Քանակ</th><th>Ձեռքբերման գին</th><th>Տեղափոխման Գին</th><th>Ընդհանուր</th><th>Ձեռքբ. անուն</th></tr></thead>
           <tbody id="dash-tr-tb"></tbody>
         </table></div>
       </div>
@@ -396,7 +396,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
       </div>
       <div class="card">
         <div class="tw"><table>
-          <thead><tr><th style="width:30px"><input type="checkbox" id="cb-all" onchange="toggleAllCb(this)" style="width:15px;height:15px;cursor:pointer;accent-color:var(--accent)"/></th><th>#</th><th>SKU</th><th>Ապրանք</th><th>Քանակ</th><th>Ձեռքբ. գին</th><th>Ներդ. գումար</th><th>Վաճ. գին</th><th>Ակնկ. շրջ.</th><th>Ակնկ. շահ.</th><th>Ավել. ամ.</th><th></th></tr></thead>
+          <thead><tr><th style="width:30px"><input type="checkbox" id="cb-all" onchange="toggleAllCb(this)" style="width:15px;height:15px;cursor:pointer;accent-color:var(--accent)"/></th><th>#</th><th>SKU</th><th>Ապրանք</th><th>Քանակ</th><th>Ձեռքբերման գին</th><th>Ներդրված գումար</th><th>Վաճառքի գին</th><th>Ակնկ. շրջանառություն</th><th>Ակնկ. շահույթ</th><th>Ավելացման ամսաթիվ</th><th></th></tr></thead>
           <tbody id="prod-tb"></tbody>
         </table></div>
       </div>
@@ -410,8 +410,8 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
         <div class="form-grid">
           <div class="field"><label>Անվանումը</label><input id="p-name" type="text" placeholder="Ապրանքի անվանում"/></div>
           <div class="field"><label>Քանակ</label><input id="p-qty" type="number" min="0" placeholder="0"/></div>
-          <div class="field"><label>Ձեռքբ. գին (֏)</label><input id="p-buy" type="number" min="0" placeholder="0"/></div>
-          <div class="field"><label>Վաճ. գին (֏)</label><input id="p-sell" type="number" min="0" placeholder="0"/></div>
+          <div class="field"><label>Ձեռքբերման գին (֏)</label><input id="p-buy" type="number" min="0" placeholder="0"/></div>
+          <div class="field"><label>Վաճառքի գին (֏)</label><input id="p-sell" type="number" min="0" placeholder="0"/></div>
         </div>
         <div class="infobox">🏷️ SKU-ն ավտոմատ կստեղծվի (օրինակ՝ <span style="font-family:'JetBrains Mono',monospace">APR-K7MN2X</span>)</div>
         <button class="btn btn-p" id="add-btn" onclick="addProduct()">➕ Ավելացնել ապրանք</button>
@@ -438,7 +438,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
           <div class="successbox" id="import-count"></div>
           <div class="preview-wrap">
             <table>
-              <thead><tr><th>#</th><th>Անվանում</th><th>Քանակ</th><th>Ձեռքբ. գին</th><th>Վաճառքի Գին</th></tr></thead>
+              <thead><tr><th>#</th><th>Անվանում</th><th>Քանակ</th><th>Ձեռքբերման գին</th><th>Վաճառքի Գին</th></tr></thead>
               <tbody id="import-tb"></tbody>
             </table>
           </div>
@@ -461,7 +461,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
             <select id="s-prod"><option value="">— Ընտրել ապրանքը —</option></select>
           </div>
           <div class="field"><label>Քանակ</label><input id="s-qty" type="number" min="1" value="1"/></div>
-          <div class="field"><label>Վաճ. գին (֏)</label><input id="s-price" type="number" min="0" placeholder="0"/></div>
+          <div class="field"><label>Վաճառքի գին (֏)</label><input id="s-price" type="number" min="0" placeholder="0"/></div>
         </div>
         <div id="s-info" style="display:none"></div>
         <button class="btn btn-g" id="sell-btn" onclick="recordSale()">✅ Հաստատել վաճառքը</button>
@@ -486,7 +486,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
       </div>
       <div class="card">
         <div class="tw"><table>
-          <thead><tr><th>Տրանզիտի ID</th><th>Ապրանք</th><th>Քանակ</th><th>Ձեռքբ. գին</th><th>Տեղափոխման Գին</th><th>Ընդհանուր</th><th>Ձեռքբ. անուն</th><th>Ավելացման Ամսաթիվ</th><th></th><th></th></tr></thead>
+          <thead><tr><th>Տրանզիտի ID</th><th>Ապրանք</th><th>Քանակ</th><th>Ձեռքբերման գին</th><th>Տեղափոխման Գին</th><th>Ընդհանուր</th><th>Ձեռքբ. անուն</th><th>Ավելացման Ամսաթիվ</th><th></th><th></th></tr></thead>
           <tbody id="transit-tb"></tbody>
         </table></div>
       </div>
@@ -501,7 +501,7 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
         <div class="form-grid">
           <div class="field" style="grid-column:1/-1"><label>Ապրանքի անվանում</label><input id="tr-name" type="text" placeholder="Ապրանքի անվանում"/></div>
           <div class="field"><label>Քանակ</label><input id="tr-qty" type="number" min="1" placeholder="1"/></div>
-          <div class="field"><label>Ձեռքբ. գին (֏)</label><input id="tr-buy" type="number" min="0" placeholder="0"/></div>
+          <div class="field"><label>Ձեռքբերման գին (֏)</label><input id="tr-buy" type="number" min="0" placeholder="0"/></div>
           <div class="field"><label>Տեղափոխման Գին (֏)</label><input id="tr-ship" type="number" min="0" placeholder="0" value="0"/></div>
           <div class="field"><label>Ձեռքբ. անուն</label><input id="tr-buyer" type="text" placeholder="Ձեռքբերողի անուն (կամընտիր պարամետր)"/></div>
         </div>
@@ -511,20 +511,22 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
 
     <!-- ── SALES HISTORY ──────────────────────────────────────── -->
     <div id="page-history" class="page">
-      <div class="ph"><div class="ph-l"><h2>Վաճառքի պատմություն</h2><p>Ֆիլտրեք ըստ ամսի կամ տարու</p></div></div>
+      <div class="ph"><div class="ph-l"><h2>Վաճառքի պատմություն</h2><p>Ֆիլտրեք ըստ ամսվա կամ տարվա</p></div></div>
       <div class="filters">
-        <select id="f-m" onchange="renderHistory()"><option value="">Բոլոր ամիսները</option></select>
-        <select id="f-y" onchange="renderHistory()"><option value="">Բոլոր տարիները</option></select>
+        <select id="f-m"><option value="">Բոլոր ամիսները</option></select>
+        <select id="f-y"><option value="">Բոլոր տարիները</option></select>
+        <button class="btn btn-p" style="padding:8px 18px;font-size:12.5px" onclick="renderHistory()">🔍 Ֆիլտրել</button>
+        <button class="btn btn-ghost" style="padding:8px 14px;font-size:12.5px" onclick="clearFilters()">✕ Մաքրել</button>
       </div>
       <div class="sumbar" id="sumbar" style="display:none;grid-template-columns:repeat(4,1fr)">
         <div class="sumb"><span class="sumb-ico">🧾</span><div><div class="sumb-label">Վաճ. քանակ</div><div class="sumb-val cv" id="sm-c">0</div></div></div>
-        <div class="sumb"><span class="sumb-ico">💰</span><div><div class="sumb-label">Ընդ. շրջ.</div><div class="sumb-val cg" id="sm-i">0</div></div></div>
-        <div class="sumb"><span class="sumb-ico">📈</span><div><div class="sumb-label">Ընդ. շահ.</div><div class="sumb-val cg" id="sm-profit">0</div></div></div>
-        <div class="sumb"><span class="sumb-ico">🏆</span><div><div class="sumb-label">Ամ. շ. վ. ապ.</div><div class="sumb-val co" id="sm-t">—</div></div></div>
+        <div class="sumb"><span class="sumb-ico">💰</span><div><div class="sumb-label">Ընդհ. շրջանառություն</div><div class="sumb-val cg" id="sm-i">0</div></div></div>
+        <div class="sumb"><span class="sumb-ico">📈</span><div><div class="sumb-label">Ընդհ. շահույթ</div><div class="sumb-val cg" id="sm-profit">0</div></div></div>
+        <div class="sumb"><span class="sumb-ico">🏆</span><div><div class="sumb-label">Ամենաշատ վաճ. ապրանք</div><div class="sumb-val co" id="sm-t">—</div></div></div>
       </div>
       <div class="card">
         <div class="tw"><table>
-          <thead><tr><th>SKU</th><th>Ապրանք</th><th>Քանակ</th><th>Գ/հ</th><th>Շահ./հ</th><th>Ընդ. շրջ.</th><th>Ամսաթիվ</th><th></th></tr></thead>
+          <thead><tr><th>SKU</th><th>Ապրանք</th><th>Քանակ</th><th>Գին/հատ</th><th>Շահույթ/հատ</th><th>Ընդ. շրջանառություն</th><th>Ամսաթիվ</th><th></th></tr></thead>
           <tbody id="hist-tb"></tbody>
         </table></div>
       </div>
@@ -884,16 +886,94 @@ function editCell(td, sku, field, cur) {
 }
 
 // ── Date utils ──────────────────────────────────────────────
-function cleanDate(d) {
-  if (!d) return '—';
-  return d.replace(/\s*GMT[+-]\d{4}[^)]*\)?/g,'').replace(/\(.*?\)/g,'').trim();
-}
-function parseSaleDate(d) {
-  if (!d) return null;
-  const clean = cleanDate(d);
-  const m = clean.match(/^(\d{2})-(\d{2})-(\d{4})/);
-  if (m) return new Date(+m[3], +m[2]-1, +m[1]);
+// ── Universal date parser — handles every format Google Sheets returns ──
+// Supported:
+//   "05-02-2026 18:46"                              ← our niceDate (dd-mm-yyyy)
+//   "Thu Feb 05 2026 18:46:00 GMT+0400 (...)"       ← JS Date.toString()
+//   "2026-02-05T14:46:00.000Z"                      ← ISO
+//   "Fri May 02 2025 ..."                            ← any JS toString variant
+function parseSaleDate(raw) {
+  if (!raw || raw === '—') return null;
+  const s = String(raw).trim();
+
+  // Format 1: dd-MM-yyyy or dd-mm-yyyy — our niceDate() canonical format
+  // e.g. "03-05-2026 10:02"  → day=03, month=05, year=2026 → May 3
+  const m1 = s.match(/^(\d{1,2})-(\d{1,2})-(\d{4})/);
+  if (m1) {
+    const dd = +m1[1], mm = +m1[2], yyyy = +m1[3];
+    // Sanity: if mm>12 then fields are swapped (mm-dd-yyyy locale) — fix it
+    if (mm > 12) return new Date(yyyy, dd-1, mm); // swap
+    return new Date(yyyy, mm-1, dd);
+  }
+
+  // Format 2: JS Date.toString() — "Thu May 03 2026 10:02:00 GMT+0400 (...)"
+  const notz = s.replace(/GMT[+-]\d{4}[^)]*\)?/gi,'').replace(/\(.*?\)/g,'').trim();
+  const m2 = notz.match(/[A-Za-z]{3}\s+([A-Za-z]{3})\s+(\d{1,2})\s+(\d{4})/);
+  if (m2) {
+    const MONTH_MAP = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+    const mo = MONTH_MAP[m2[1]];
+    if (mo !== undefined) return new Date(+m2[3], mo, +m2[2]);
+  }
+
+  // Format 3: ISO "2026-05-03T..."
+  const m3 = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (m3) return new Date(+m3[1], +m3[2]-1, +m3[3]);
+
+  // Format 4: Apps Script locale slash format "5/3/2026" or "05/03/2026"
+  // In most locales this is MM/DD/YYYY, but Apps Script Armenia locale = DD/MM/YYYY
+  const m4 = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if (m4) {
+    const a = +m4[1], b = +m4[2], yyyy = +m4[3];
+    // If a > 12 → must be day; b is month
+    if (a > 12) return new Date(yyyy, b-1, a);
+    // If b > 12 → b must be day; a is month (MM/DD)
+    if (b > 12) return new Date(yyyy, a-1, b);
+    // Ambiguous — assume DD/MM (Armenia convention)
+    return new Date(yyyy, b-1, a);
+  }
+
+  // Format 5: "May 3, 2026" or "3 May 2026"
+  const MNAMES = {January:0,February:1,March:2,April:3,May:4,June:5,
+                  July:6,August:7,September:8,October:9,November:10,December:11,
+                  Jan:0,Feb:1,Mar:2,Apr:3,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+  const m5 = s.match(/^([A-Za-z]+)\s+(\d{1,2}),?\s+(\d{4})/);
+  if (m5 && MNAMES[m5[1]] !== undefined) return new Date(+m5[3], MNAMES[m5[1]], +m5[2]);
+  const m6 = s.match(/^(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/);
+  if (m6 && MNAMES[m6[2]] !== undefined) return new Date(+m6[3], MNAMES[m6[2]], +m6[1]);
+
   return null;
+}
+
+// Format date for display: always show as "Thu Feb 05 2026 18:46" style
+function cleanDate(raw) {
+  if (!raw || raw === '—') return '—';
+  const s = String(raw).trim();
+
+  // Format 1: our dd-mm-yyyy hh:mm — show as is (e.g. "05.02.2026 18:46")
+  const m1 = s.match(/^(\d{2})-(\d{2})-(\d{4})\s*(\d{2}:\d{2})?/);
+  if (m1) {
+    const time = m1[4] ? ' ' + m1[4] : '';
+    return `${m1[1]}.${m1[2]}.${m1[3]}${time}`;
+  }
+
+  // Format 2: JS Date.toString() "Thu Feb 05 2026 18:46:00 GMT+0400 (...)"
+  // Strip timezone, convert month name to number, return dd.mm.yyyy hh:mm
+  const notz = s.replace(/GMT[+-]\d{4}[^)]*\)?/gi,'').replace(/\(.*?\)/g,'').trim();
+  const m2 = notz.match(/[A-Za-z]{3}\s+([A-Za-z]{3})\s+(\d{1,2})\s+(\d{4})(?:\s+(\d{2}:\d{2})(?::\d{2})?)?/);
+  if (m2) {
+    const MMAP = {Jan:'01',Feb:'02',Mar:'03',Apr:'04',May:'05',Jun:'06',
+                  Jul:'07',Aug:'08',Sep:'09',Oct:'10',Nov:'11',Dec:'12'};
+    const mo = MMAP[m2[1]] || '??';
+    const dd = String(m2[2]).padStart(2,'0');
+    const time = m2[4] ? ' ' + m2[4] : '';
+    return `${dd}.${mo}.${m2[3]}${time}`;
+  }
+
+  // Format 3: ISO 2026-02-05T...
+  const m3 = s.match(/^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}:\d{2}))?/);
+  if (m3) return `${m3[3]}.${m3[2]}.${m3[1]}${m3[4] ? ' '+m3[4] : ''}`;
+
+  return s.slice(0, 16);
 }
 
 // ── Render ───────────────────────────────────────────────────
@@ -919,7 +999,7 @@ function renderDash() {
   document.getElementById('st-cnt').textContent   = S.products.length;
   document.getElementById('st-inv').textContent   = fmt(inv);
   document.getElementById('st-exp').textContent   = fmt(profit);
-  document.getElementById('st-exp-s').textContent = `Ակնկ. շրջ.՝ ${fmt(exp)}`;
+  document.getElementById('st-exp-s').textContent = `Ակնկ. շրջանառություն՝ ${fmt(exp)}`;
   document.getElementById('st-mon').textContent   = fmt(mInc);
   document.getElementById('st-mon-s').textContent = `${mSales.length} վաճ. ${MONTHS_FULL[now.getMonth()]}ին`;
   document.getElementById('st-tr').textContent    = `${S.transit.length} տ. · ${trQty} հ.`;
@@ -964,7 +1044,7 @@ function renderProducts() {
     tb.innerHTML='<tr><td colspan="12" class="empty"><span class="ei">📦</span>Ապրանքներ չկան</td></tr>'; return;
   }
   tb.innerHTML = S.products.map((p,i)=>{
-    const cleanDate = p.addedAt ? p.addedAt.replace(/\s*GMT[+-]\d{4}.*$/,'').replace(/\(.*?\)/g,'').trim() : '—';
+    const cleanDateStr = cleanDate(p.addedAt);
     return `<tr>
     <td style="padding:6px 8px"><input type="checkbox" class="prod-cb" data-sku="${p.sku}" style="width:15px;height:15px;cursor:pointer;accent-color:var(--accent)"/></td>
     <td class="cv" style="font-size:12px">${i+1}</td>
@@ -979,7 +1059,7 @@ function renderProducts() {
       <span class="ev">${fmt(p.salePrice)}</span></td>
     <td class="cg">${fmt(p.salePrice*p.quantity)}</td>
     <td class="cg" style="font-size:12.5px">${fmt((p.salePrice-p.purchasePrice)*p.quantity)}</td>
-    <td style="font-size:11px;color:var(--muted)">${cleanDate}</td>
+    <td style="font-size:11px;color:var(--muted)">${cleanDateStr}</td>
     <td><button class="btn btn-r" onclick="deleteProduct('${p.sku}')">🗑</button></td>
   </tr>`;}).join('');
 }
@@ -1008,7 +1088,7 @@ function renderTransit() {
     <td class="cy">${fmt(t.shippingPrice)}</td>
     <td class="cg">${fmt(t.total)}</td>
     <td style="font-size:12px;color:var(--muted2)">${t.buyer||'—'}</td>
-    <td style="font-size:11px;color:var(--muted)">${t.addedAt?t.addedAt.replace(/\s*GMT[+-]\d{4}.*$/,'').replace(/\(.*?\)/g,'').trim():'—'}</td>
+    <td style="font-size:11px;color:var(--muted)">${cleanDate(t.addedAt)}</td>
     <td><button class="btn btn-y-sm" onclick="openTransitModal('${t.id}')">📦 Պահեստավորում</button></td>
     <td><button class="btn btn-r" onclick="deleteTransit('${t.id}')">🗑</button></td>
   </tr>`).join('');
@@ -1035,80 +1115,109 @@ function fillSellDrop() {
 
 function fillFilters() {
   const now = new Date();
+  // Build year options from actual sale dates
   const years = [...new Set(S.sales.map(s=>{
     const d = parseSaleDate(s.date);
     return d ? String(d.getFullYear()) : null;
   }).filter(Boolean))].sort((a,b)=>b-a);
-  const ySel = document.getElementById('f-y'), cy = ySel.value;
-  ySel.innerHTML = '<option value="">Բոլոր տարիները</option>' +
-    years.map(y=>`<option value="${y}"${y===cy?' selected':''}>${y}</option>`).join('');
-  const mSel = document.getElementById('f-m'), cm = mSel.value;
-  const defaultM = String(now.getMonth()+1).padStart(2,'0');
-  mSel.innerHTML = '<option value="">Բոլոր ամիսները</option>' +
-    MONTHS_FULL.map((m,i)=>{const v=String(i+1).padStart(2,'0');const sel=(v===(cm||defaultM));return `<option value="${v}"${sel?' selected':''}>${m}</option>`}).join('');
+
+  const ySel = document.getElementById('f-y'), cy = ySel ? ySel.value : '';
+  if (ySel) {
+    ySel.innerHTML = '<option value="">Բոլոր տարիները</option>' +
+      years.map(y=>`<option value="${y}"${y===cy?' selected':''}>${y}</option>`).join('');
+  }
+
+  const mSel = document.getElementById('f-m'), cm = mSel ? mSel.value : '';
+  // Default to current month if no value already set
+  const defaultM = cm || String(now.getMonth()+1).padStart(2,'0');
+  if (mSel) {
+    mSel.innerHTML = '<option value="">Բոլոր ամիսները</option>' +
+      MONTHS_FULL.map((m,i)=>{
+        const v = String(i+1).padStart(2,'0');
+        return `<option value="${v}"${v===defaultM?' selected':''}>${m}</option>`;
+      }).join('');
+  }
 }
+
+function clearFilters() {
+  const mSel = document.getElementById('f-m');
+  const ySel = document.getElementById('f-y');
+  if (mSel) mSel.value = '';
+  if (ySel) ySel.value = '';
+  renderHistory();
+}
+
 
 function renderHistory() {
   const now = new Date();
   const mSel = document.getElementById('f-m');
   const ySel = document.getElementById('f-y');
-  // Default to current month if no filter set yet
-  if (mSel && !mSel.value && !ySel.value) {
-    mSel.value = String(now.getMonth()+1).padStart(2,'0');
-  }
+
+  // Read current filter values (may be empty = show all)
   const mf = mSel ? mSel.value : '';
   const yf = ySel ? ySel.value : '';
 
+  // Sort descending by date
   let sales = [...S.sales].sort((a,b)=>{
     const da = parseSaleDate(a.date), db = parseSaleDate(b.date);
-    if (!da||!db) return 0;
-    return db-da;
+    if (!da && !db) return 0;
+    if (!da) return 1;
+    if (!db) return -1;
+    return db - da;
   });
+
+  // Apply filters only if set
   if (mf) sales = sales.filter(s=>{
     const d = parseSaleDate(s.date);
-    return d && String(d.getMonth()+1).padStart(2,'0')===mf;
+    return d && String(d.getMonth()+1).padStart(2,'0') === mf;
   });
   if (yf) sales = sales.filter(s=>{
     const d = parseSaleDate(s.date);
-    return d && String(d.getFullYear())===yf;
+    return d && String(d.getFullYear()) === yf;
   });
 
+  // Sumbar
   const sb = document.getElementById('sumbar');
   if (sales.length) {
-    sb.style.display='grid';
-    const turnover = sales.reduce((a,s)=>a+s.total,0);
-    const profitTotal = sales.reduce((a,s)=>{
-      const p = S.products.find(x=>x.sku===s.sku);
-      const buyPrice = p?p.purchasePrice:0;
-      return a + (s.salePrice - buyPrice)*s.quantity;
-    },0);
-    const tm = {}; sales.forEach(s=>{tm[s.productName]=(tm[s.productName]||0)+s.quantity});
-    const top = Object.entries(tm).sort((a,b)=>b[1]-a[1])[0];
+    sb.style.display = 'grid';
+    const turnover    = sales.reduce((a,s) => a + s.total, 0);
+    const profitTotal = sales.reduce((a,s) => {
+      const p = S.products.find(x => x.sku === s.sku);
+      return a + (s.salePrice - (p ? p.purchasePrice : 0)) * s.quantity;
+    }, 0);
+    const tm = {};
+    sales.forEach(s => { tm[s.productName] = (tm[s.productName]||0) + s.quantity; });
+    const top = Object.entries(tm).sort((a,b) => b[1]-a[1])[0];
     document.getElementById('sm-c').textContent = sales.length;
     document.getElementById('sm-i').textContent = fmt(turnover);
     const profEl = document.getElementById('sm-profit');
     if (profEl) profEl.textContent = fmt(profitTotal);
-    document.getElementById('sm-t').textContent = top?top[0]:'—';
-  } else { sb.style.display='none'; }
+    document.getElementById('sm-t').textContent = top ? top[0] : '—';
+  } else {
+    sb.style.display = 'none';
+  }
 
+  // Table
   const tb = document.getElementById('hist-tb');
   if (!sales.length) {
-    tb.innerHTML='<tr><td colspan="8" class="empty"><span class="ei">🗓️</span>Վաճառքներ չեն գտնվել</td></tr>'; return;
+    tb.innerHTML = '<tr><td colspan="8" class="empty"><span class="ei">🗓️</span>Վաճառքներ չեն գտնվել</td></tr>';
+    return;
   }
-  tb.innerHTML = sales.map(s=>{
-    const p = S.products.find(x=>x.sku===s.sku);
-    const buyPrice = p?p.purchasePrice:0;
+  tb.innerHTML = sales.map(s => {
+    const p        = S.products.find(x => x.sku === s.sku);
+    const buyPrice = p ? p.purchasePrice : 0;
     const profitPer = s.salePrice - buyPrice;
     return `<tr>
-    <td><span class="sku">${s.sku}</span></td>
-    <td><strong>${s.productName}</strong></td>
-    <td><span class="badge bp">${s.quantity}</span></td>
-    <td class="co">${fmt(s.salePrice)}</td>
-    <td class="${profitPer>=0?'cg':'cr'}" style="font-size:12.5px">${fmt(profitPer)}</td>
-    <td class="cg">${fmt(s.total)}</td>
-    <td style="color:var(--muted);font-size:11.5px">${cleanDate(s.date)}</td>
-    <td><button class="btn btn-r" onclick="deleteSale('${s.id}')">🗑</button></td>
-  </tr>`;}).join('');
+      <td><span class="sku">${s.sku}</span></td>
+      <td><strong>${s.productName}</strong></td>
+      <td><span class="badge bp">${s.quantity}</span></td>
+      <td class="co">${fmt(s.salePrice)}</td>
+      <td class="${profitPer >= 0 ? 'cg' : 'cr'}" style="font-size:12.5px">${fmt(profitPer)}</td>
+      <td class="cg">${fmt(s.total)}</td>
+      <td style="color:var(--muted);font-size:11.5px">${cleanDate(s.date)}</td>
+      <td><button class="btn btn-r" onclick="deleteSale('${s.id}')">🗑</button></td>
+    </tr>`;
+  }).join('');
 }
 
 function renderTracker() {
@@ -1120,9 +1229,9 @@ function renderTracker() {
     const pSales  = S.sales.filter(s => s.sku === p.sku);
     const soldQty = pSales.reduce((a,s) => a+s.quantity, 0);
     let daysSinceAdded = '—', daysPerUnit = '—';
-    if (p.addedAt && p.addedAt.length >= 10) {
-      const [dd,mm,yyyy] = p.addedAt.slice(0,10).split('-').map(Number);
-      const diff = Math.floor((new Date() - new Date(yyyy,mm-1,dd)) / 86400000);
+    const _parsedAt = parseSaleDate(p.addedAt);
+    if (_parsedAt) {
+      const diff = Math.floor((new Date() - _parsedAt) / 86400000);
       daysSinceAdded = diff;
       if (soldQty > 0) daysPerUnit = (diff / soldQty).toFixed(1) + ' օր/հատ';
     }
@@ -1133,7 +1242,7 @@ function renderTracker() {
     return `<tr>
       <td><span class="sku">${p.sku}</span></td>
       <td><strong>${p.name}</strong></td>
-      <td style="font-size:12px;color:var(--muted)">${p.addedAt?(p.addedAt.replace(/\s*GMT[+-]\d{4}.*$/,'').replace(/\(.*?\)/g,'').trim()):'—'}</td>
+      <td style="font-size:12px;color:var(--muted)">${cleanDate(p.addedAt)}</td>
       <td><span class="badge bt">${soldQty}</span></td>
       <td style="font-size:12px;color:var(--muted)">${daysSinceAdded==='—'?'—':daysSinceAdded+' օր'}</td>
       <td><span class="badge ${urgency}">${remaining}</span></td>
