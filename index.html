@@ -548,9 +548,9 @@ td input.ie{background:var(--s2);border:1px solid var(--accent);border-radius:7p
               <div class="date-full" id="td-full-transit">—</div>
             </div>
           </div>
-          <button class="btn btn-ghost" onclick="loadData()" title="Թarmaçnel" style="padding:8px 14px">
+          <button class="btn btn-ghost" onclick="loadData()" title="Թարմացնել" style="padding:8px 14px">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
-            Թarmaçnel
+            Թարմացնել
           </button>
           <button class="btn btn-y" onclick="go('add-transit',null)">➕ Ավելացնել տրանզիտ</button>
         </div>
@@ -671,14 +671,14 @@ const MONTHS_FULL  = ['Հունվար','Փետրվար','Մարտ','Ապրիլ',
 // ── Boot ─────────────────────────────────────────────────────
 function initDateDisplay() {
   const now = new Date();
-  const WDAYS_HY = ['Կիрaki','Erkushapti','Erecshapti','Chorecshapti','Hngshapti','Urbat','Shapati'];
+  const WDAYS_HY = ['', '', '', '', '', '', ''];  // weekday hidden via CSS
   const day      = now.getDate();
   const monthStr = MONTHS_FULL[now.getMonth()] + ' ' + now.getFullYear();
   const dayName  = WDAYS_HY[now.getDay()];
   // Update all date widgets across all pages
   document.querySelectorAll('[id^="td-day"]').forEach(el   => el.textContent = day);
   document.querySelectorAll('[id^="td-month"]').forEach(el => el.textContent = monthStr);
-  document.querySelectorAll('[id^="td-full"]').forEach(el  => el.textContent = dayName);
+  document.querySelectorAll('[id^="td-full"]').forEach(el  => el.textContent = '');  // weekday hidden
 }
 
 function toggleAllCb(masterCb) {
